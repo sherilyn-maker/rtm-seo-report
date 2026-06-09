@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Time Marketing — SEO & GBP Performance Report | Jan–Apr 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--primary:#1B3A6B;--primary-light:#2563EB;--accent:#F5A623;--bg:#F0F4FA;--card:#FFF;--text:#1A2333;--muted:#6B7890;--border:#CBD5E8;--green:#16A34A;--orange:#EA580C;--red:#DC2626;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+  .report-header{background:linear-gradient(135deg,#1B3A6B 0%,#2563EB 55%,#F5A623 100%);color:white;padding:40px 48px 32px;position:relative;overflow:hidden;}
+  .report-header::before{content:"";position:absolute;top:-40px;right:-40px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.06);}
+  .header-badge{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:.8;margin-bottom:10px;}
+  .header-title{font-size:32px;font-weight:800;line-height:1.2;margin-bottom:6px;}
+  .header-sub{font-size:16px;opacity:.85;margin-bottom:20px;}
+  .header-meta{display:flex;gap:24px;flex-wrap:wrap;}
+  .header-meta span{font-size:12px;opacity:.75;}
+  .tab-nav{background:var(--primary);padding:0 24px;display:flex;gap:2px;flex-wrap:wrap;overflow-x:auto;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.25);}
+  .tab-btn{background:transparent;border:none;color:rgba(255,255,255,.65);padding:14px 16px;cursor:pointer;font-size:12.5px;font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;}
+  .tab-btn:hover{color:white;background:rgba(255,255,255,.08);}
+  .tab-btn.active{color:white;border-bottom-color:var(--accent);background:rgba(255,255,255,.1);}
+  .tab-pane{display:none;padding:28px 32px;max-width:1400px;margin:0 auto;}
+  .tab-pane.active{display:block;}
+  .section-title{font-size:20px;font-weight:700;color:var(--primary);margin-bottom:6px;border-left:4px solid var(--accent);padding-left:12px;}
+  .section-sub{color:var(--muted);font-size:13px;margin-bottom:20px;padding-left:16px;}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px;margin-bottom:28px;}
+  .kpi-card{background:var(--card);border-radius:10px;padding:18px 16px;border-top:4px solid var(--primary);box-shadow:0 2px 8px rgba(0,0,0,.07);}
+  .kpi-card.green{border-top-color:var(--green);} .kpi-card.orange{border-top-color:var(--orange);} .kpi-card.red{border-top-color:var(--red);}
+  .kpi-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px;}
+  .kpi-value{font-size:28px;font-weight:800;color:var(--text);line-height:1;}
+  .kpi-delta{font-size:11px;margin-top:4px;}
+  .kpi-delta.up{color:var(--green);} .kpi-delta.down{color:var(--red);} .kpi-delta.neutral{color:var(--muted);}
+  .card{background:var(--card);border-radius:10px;padding:20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.07);}
+  .card-title{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:14px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .chart-wrap{position:relative;height:260px;}
+  .tbl-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{background:var(--primary);color:white;padding:10px 12px;text-align:left;font-size:11.5px;font-weight:600;white-space:nowrap;}
+  tbody tr:nth-child(even){background:#F3F6FB;}
+  tbody tr:hover{background:#E8EEF8;}
+  td{padding:9px 12px;border-bottom:1px solid var(--border);}
+  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;}
+  .badge-green{background:#DCFCE7;color:#15803D;} .badge-orange{background:#FEF3C7;color:#B45309;}
+  .badge-red{background:#FEE2E2;color:#B91C1C;} .badge-blue{background:#DBEAFE;color:#1D4ED8;}
+  .badge-gray{background:#F1F5F9;color:#475569;}
+  .ctr-good{color:var(--green);font-weight:700;} .ctr-warn{color:var(--orange);font-weight:700;} .ctr-bad{color:var(--red);font-weight:700;}
+  .rank-good{color:var(--green);font-weight:700;} .rank-warn{color:var(--orange);font-weight:700;} .rank-bad{color:var(--red);font-weight:700;}
+  .insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px;}
+  .insight-box{background:var(--card);border-radius:10px;padding:16px 18px;border-left:5px solid var(--primary);box-shadow:0 2px 6px rgba(0,0,0,.06);}
+  .insight-box.green{border-left-color:var(--green);} .insight-box.orange{border-left-color:var(--orange);} .insight-box.red{border-left-color:var(--red);} .insight-box.blue{border-left-color:#2563EB;}
+  .insight-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;}
+  .insight-box.green .insight-title{color:var(--green);} .insight-box.orange .insight-title{color:var(--orange);} .insight-box.red .insight-title{color:var(--red);} .insight-box.blue .insight-title{color:#2563EB;}
+  .insight-box p{font-size:13px;line-height:1.55;}
+  .filter-btn{background:#EEF2FF;border:1px solid var(--border);padding:7px 14px;border-radius:20px;cursor:pointer;font-size:12.5px;font-weight:600;transition:all .15s;}
+  .filter-btn.active,.filter-btn:hover{background:var(--primary);color:white;border-color:var(--primary);}
+  @media(max-width:768px){.tab-pane{padding:16px;}.two-col{grid-template-columns:1fr;}.header-title{font-size:22px;}}
+</style>
+</head>
+<body>
+<div class="report-header">
+  <div class="header-badge">SEO &amp; GBP Performance Report</div>
+  <div class="header-title">Real Time Marketing</div>
+  <div class="header-sub">Digital Marketing Agency · Bradenton &amp; Tampa, FL | January – April 2026</div>
+  <div class="header-meta">
+    <span><strong>Website:</strong> realtimemarketing.com</span>
+    <span><strong>Locations:</strong> Bradenton, FL · Tampa, FL</span>
+    <span><strong>Report Period:</strong> Jan 1 – Apr 30, 2026</span>
+    <span><strong>Prepared:</strong> June 2026</span>
+  </div>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab-summary">📋 Executive Summary</button>
+  <button class="tab-btn" data-tab="tab-gbp">📍 GBP Performance</button>
+  <button class="tab-btn" data-tab="tab-gsc">🔎 Search Console</button>
+  <button class="tab-btn" data-tab="tab-ga4">📊 GA4 Analytics</button>
+  <button class="tab-btn" data-tab="tab-content">📝 Content Audit</button>
+  <button class="tab-btn" data-tab="tab-calendar">📅 Content Calendar</button>
+  <button class="tab-btn" data-tab="tab-actions">🚀 Priority Actions</button>
+</nav>
+
+<!-- EXECUTIVE SUMMARY -->
+<div id="tab-summary" class="tab-pane active">
+  <div class="section-title">Executive Summary</div>
+  <div class="section-sub">Jan–Apr 2026 · Real Time Marketing · Bradenton, FL</div>
+  <div class="kpi-grid">
+    <div class="kpi-card green"><div class="kpi-label">Organic Clicks (GSC)</div><div class="kpi-value">1,158</div><div class="kpi-delta up">↑ Growing trend</div></div>
+    <div class="kpi-card"><div class="kpi-label">GSC Impressions</div><div class="kpi-value">838K</div><div class="kpi-delta neutral">200 pages indexed</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">Avg. GSC Position</div><div class="kpi-value">26.2</div><div class="kpi-delta up">↑ Improving (32→24)</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Phone Conversions</div><div class="kpi-value">1,019</div><div class="kpi-delta up">↑ GA4 tracked</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Paid Search Conv.</div><div class="kpi-value">669</div><div class="kpi-delta up">22% conv. rate</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">GA4 Sessions</div><div class="kpi-value">53,290</div><div class="kpi-delta down">↓ -37% Jan→Apr</div></div>
+    <div class="kpi-card"><div class="kpi-label">Engagement Rate</div><div class="kpi-value">44.9%</div><div class="kpi-delta neutral">Improving monthly</div></div>
+    <div class="kpi-card green"><div class="kpi-label">GBP Calls (Bradenton)</div><div class="kpi-value">10</div><div class="kpi-delta neutral">Jan–Apr 2026</div></div>
+  </div>
+  <div class="insight-grid">
+    <div class="insight-box red">
+      <div class="insight-title">🚨 135K Impressions — 10 Clicks (SEO for HVAC Page)</div>
+      <p>The SEO for HVAC page ranks at <strong>position 31.9 with 135,657 impressions and only 10 clicks</strong>. This single page represents 16% of all site impressions but generates almost no traffic. A full content rewrite with case studies, pricing, and FAQ schema could move this to page 1 within 90 days — potentially adding 200–400 monthly clicks.</p>
+    </div>
+    <div class="insight-box red">
+      <div class="insight-title">🚨 Sessions Declining 37% (Jan→Apr)</div>
+      <p>GA4 sessions fell from <strong>15,908 in January to 10,081 in April — a 37% decline</strong>. While part of this is seasonal, the consistent month-over-month drop warrants investigation. Referral traffic (32.7% of sessions) suggests much of this is client portal usage, but organic and direct traffic need to be isolated.</p>
+    </div>
+    <div class="insight-box green">
+      <div class="insight-title">✅ Paid Search — Exceptional 22% Conversion Rate</div>
+      <p>Paid search generated <strong>669 conversions from 2,990 sessions = 22.4% conversion rate</strong> — significantly above the 2–5% industry average for B2B marketing agencies. This signals strong ad-to-landing-page alignment. Scale paid search budget to maximize this high-performing channel.</p>
+    </div>
+    <div class="insight-box orange">
+      <div class="insight-title">⚠️ 460K+ Impressions Stranded on Page 3–6</div>
+      <p>Adding up pages ranking positions 25–65: SEO/HVAC (135K), plumbers (105K), home services (60K), HVAC marketing (40K), electricians (39K), roofers (33K) = <strong>412K+ impressions generating almost zero clicks</strong>. These pages need urgent content upgrades to break into the top 10.</p>
+    </div>
+    <div class="insight-box blue">
+      <div class="insight-title">💡 LSA for Roofers — Proof the Strategy Works</div>
+      <p>The LSA for Roofers page ranks at <strong>position 10.3 with 38,113 impressions and 33 clicks (0.09% CTR)</strong>. This proves the service × industry content strategy can rank. Apply the same depth of content to the 12+ other industry pages currently ranking page 3–6.</p>
+    </div>
+    <div class="insight-box blue">
+      <div class="insight-title">💡 GBP Map Pack — #1 for Social Media Marketing</div>
+      <p>Bradenton GBP holds <strong>#1 map pack positions for "Social Media Marketing for Plumbers"</strong> and <strong>"Social Media Marketing for Air Conditioning"</strong> — both consistent throughout Jan–Apr 2026. These specialty B2B keywords show strong local authority for marketing-to-trades niche.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">🚦 Top 5 Priority Actions</div>
+    <table><thead><tr><th>#</th><th>Action</th><th>Impact</th><th>Effort</th><th>Timeline</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1</strong></td><td>Rewrite SEO for HVAC page (135K impr, pos 31.9) — case studies, pricing, FAQ schema</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-orange">Medium</span></td><td>Week 1–2</td></tr>
+      <tr><td><strong>2</strong></td><td>Expand Digital Marketing for Plumbers page (105K impr, pos 27.8) — ROI stats, LSA results</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-orange">Medium</span></td><td>Week 1–2</td></tr>
+      <tr><td><strong>3</strong></td><td>Fix SEO for Electricians page (27K impr, pos 57.8 — page 6!) — complete rewrite</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-orange">Medium</span></td><td>Week 2–3</td></tr>
+      <tr><td><strong>4</strong></td><td>Optimize GBP management page (42K impr, pos 19.8) — FAQ schema, pricing section</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>Week 1</td></tr>
+      <tr><td><strong>5</strong></td><td>Investigate session decline — separate client portal traffic from marketing website traffic in GA4</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>This week</td></tr>
+    </tbody></table>
+  </div>
+</div>
+
+<!-- GBP PERFORMANCE -->
+<div id="tab-gbp" class="tab-pane">
+  <div class="section-title">GBP Performance</div>
+  <div class="section-sub">Google Business Profile · Bradenton, FL &amp; Tampa, FL · Jan–Apr 2026</div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">GBP Website Clicks</div><div class="kpi-value">97</div><div class="kpi-delta neutral">Jan–Apr, Bradenton</div></div>
+    <div class="kpi-card green"><div class="kpi-label">GBP Calls</div><div class="kpi-value">10</div><div class="kpi-delta neutral">Jan–Apr 2026</div></div>
+    <div class="kpi-card"><div class="kpi-label">Profile Views</div><div class="kpi-value">1,458</div><div class="kpi-delta neutral">Bradenton, Jan–Apr</div></div>
+    <div class="kpi-card green"><div class="kpi-label">GBP Map Traffic</div><div class="kpi-value">178</div><div class="kpi-delta neutral">Directions requested</div></div>
+    <div class="kpi-card green"><div class="kpi-label">GBP via Maps</div><div class="kpi-value">128</div><div class="kpi-delta up">↑ 128 clicks (Jan-Apr)</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📅 GBP Monthly Performance — Bradenton, FL</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Month</th><th>Website Clicks</th><th>Calls</th><th>Directions</th><th>Visit Profile</th><th>Impressions</th></tr></thead>
+      <tbody>
+        <tr><td>Sep 2025</td><td>30</td><td>4</td><td>—</td><td>471</td><td>60</td></tr>
+        <tr><td>Oct 2025</td><td>27</td><td>3</td><td>—</td><td>461</td><td>&lt;50</td></tr>
+        <tr><td>Nov 2025</td><td>22</td><td>4</td><td>—</td><td>376</td><td>&lt;15</td></tr>
+        <tr><td>Dec 2025</td><td>18</td><td>1</td><td>—</td><td>347</td><td>&lt;50</td></tr>
+        <tr><td><strong>Jan 2026</strong></td><td><strong>29</strong></td><td><strong>1</strong></td><td><strong>56</strong></td><td><strong>365</strong></td><td><strong>&lt;15</strong></td></tr>
+        <tr><td><strong>Feb 2026</strong></td><td><strong>30</strong></td><td><strong>1</strong></td><td><strong>48</strong></td><td><strong>377</strong></td><td><strong>46</strong></td></tr>
+        <tr><td><strong>Mar 2026</strong></td><td><strong>16</strong></td><td><strong>3</strong></td><td><strong>48</strong></td><td><strong>375</strong></td><td><strong>54</strong></td></tr>
+        <tr><td><strong>Apr 2026</strong></td><td><strong>22</strong></td><td><strong>5</strong></td><td><strong>26</strong></td><td><strong>341</strong></td><td><strong>17</strong></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">📍 Map Pack Rankings — Bradenton, FL (Jan–Apr 2026)</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Keyword</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Trend</th></tr></thead>
+        <tbody>
+          <tr><td>Social Media Mktg for Plumbers</td><td class="rank-good">1</td><td class="rank-good">1</td><td class="rank-good">1</td><td class="rank-good">1</td><td class="rank-good">🏆 Holding #1</td></tr>
+          <tr><td>Social Media Mktg for Air Cond.</td><td class="rank-good">1</td><td class="rank-good">1</td><td class="rank-good">1</td><td class="rank-good">1</td><td class="rank-good">🏆 Holding #1</td></tr>
+          <tr><td>Google Ads for Trenchless Svcs</td><td>—</td><td class="rank-good">1</td><td class="rank-good">1</td><td class="rank-good">1</td><td class="rank-good">↑ Now #1</td></tr>
+          <tr><td>Website Design for Plumbers</td><td class="rank-warn">10</td><td class="rank-warn">11</td><td class="rank-good">6</td><td class="rank-warn">9</td><td>Volatile</td></tr>
+          <tr><td>SEO for Plumbers in</td><td>—</td><td class="rank-warn">14</td><td>—</td><td>—</td><td class="rank-bad">Inconsistent</td></tr>
+          <tr><td>Google LSA for Pest Control</td><td>—</td><td>—</td><td class="rank-bad">20</td><td>—</td><td>Sporadic</td></tr>
+          <tr><td>GBP for Plumber</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="rank-bad">Not ranking</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 GBP Performance Chart</div>
+      <div class="chart-wrap"><canvas id="gbpChart"></canvas></div>
+    </div>
+  </div>
+  <div class="insight-grid">
+    <div class="insight-box green">
+      <div class="insight-title">🏆 #1 for Social Media Marketing Keywords</div>
+      <p>Bradenton GBP consistently holds <strong>#1 map pack for "Social Media Marketing for Plumbers"</strong> and <strong>"Social Media Marketing for Air Conditioning"</strong> all 4 months. These B2B niche keywords signal strong local authority. Add service posts highlighting these specialties weekly.</p>
+    </div>
+    <div class="insight-box orange">
+      <div class="insight-title">⚠️ Website Design Ranking Volatile (6–11)</div>
+      <p>"Website Design for Plumbers" fluctuates between positions 6–11, suggesting <strong>competitor activity or GBP signal inconsistency</strong>. Add monthly GBP posts showcasing website design projects for plumbing clients with before/after screenshots to stabilize and improve this ranking.</p>
+    </div>
+    <div class="insight-box blue">
+      <div class="insight-title">💡 SEO &amp; GBP Keywords Not Appearing</div>
+      <p>"GBP for Plumber" and "SEO for Plumbers" show "—" (not ranking in map pack) for most months. These are core service keywords that should be in the top 3. Build a dedicated GBP post strategy targeting these exact keyword phrases monthly.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH CONSOLE -->
+<div id="tab-gsc" class="tab-pane">
+  <div class="section-title">Google Search Console</div>
+  <div class="section-sub">realtimemarketing.com · 200 pages indexed · Jan–Apr 2026</div>
+  <div class="kpi-grid">
+    <div class="kpi-card green"><div class="kpi-label">Total Clicks</div><div class="kpi-value">1,158</div><div class="kpi-delta up">↑ Growing monthly</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total Impressions</div><div class="kpi-value">838K</div><div class="kpi-delta neutral">Jan–Apr 2026</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">Avg. CTR</div><div class="kpi-value">0.14%</div><div class="kpi-delta down">↓ Very low</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Avg. Position</div><div class="kpi-value">26.2</div><div class="kpi-delta up">↑ 32.8 → 24.7</div></div>
+  </div>
+  <div class="two-col">
+    <div class="card"><div class="card-title">📈 Clicks &amp; Impressions Trend</div><div class="chart-wrap"><canvas id="gscTrendChart"></canvas></div></div>
+    <div class="card"><div class="card-title">📉 Average Position Trend</div><div class="chart-wrap"><canvas id="gscPosChart"></canvas></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📅 Monthly GSC Performance</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Month</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th>Avg Position</th></tr></thead>
+      <tbody>
+        <tr><td>Oct 2025</td><td>317</td><td>128,282</td><td class="ctr-warn">0.25%</td><td class="rank-bad">30.2</td></tr>
+        <tr><td>Nov 2025</td><td>296</td><td>126,759</td><td class="ctr-warn">0.23%</td><td class="rank-bad">30.7</td></tr>
+        <tr><td>Dec 2025</td><td>184</td><td>171,836</td><td class="ctr-bad">0.11%</td><td class="rank-bad">36.8</td></tr>
+        <tr><td><strong>Jan 2026</strong></td><td><strong>317</strong></td><td><strong>233,898</strong></td><td class="ctr-bad"><strong>0.14%</strong></td><td class="rank-bad"><strong>32.8</strong></td></tr>
+        <tr><td><strong>Feb 2026</strong></td><td><strong>310</strong></td><td><strong>245,985</strong></td><td class="ctr-bad"><strong>0.13%</strong></td><td class="rank-warn"><strong>27.8</strong></td></tr>
+        <tr><td><strong>Mar 2026</strong></td><td><strong>273</strong></td><td><strong>203,843</strong></td><td class="ctr-bad"><strong>0.13%</strong></td><td class="rank-warn"><strong>19.2</strong></td></tr>
+        <tr><td><strong>Apr 2026</strong></td><td><strong>258</strong></td><td><strong>155,104</strong></td><td class="ctr-bad"><strong>0.17%</strong></td><td class="rank-warn"><strong>24.7</strong></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🔑 Top Keywords (Jan–Apr 2026)</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Keyword</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th>Position</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td>real time marketing</td><td>308</td><td>7,362</td><td class="ctr-good">4.2%</td><td>8.6</td><td><span class="badge badge-blue">Brand</span></td></tr>
+        <tr><td>realtime marketing</td><td>73</td><td>2,044</td><td class="ctr-good">3.6%</td><td>4.0</td><td><span class="badge badge-blue">Brand</span></td></tr>
+        <tr><td>realtimemarketing</td><td>48</td><td>102</td><td class="ctr-good">47.1%</td><td>1.1</td><td><span class="badge badge-blue">Brand</span></td></tr>
+        <tr><td>digital marketing for plumbers</td><td>9</td><td>6,925</td><td class="ctr-bad">0.13%</td><td>20.6</td><td><span class="badge badge-orange">Service</span></td></tr>
+        <tr><td>digital marketing for home services</td><td>6</td><td>7,915</td><td class="ctr-bad">0.08%</td><td>9.7</td><td><span class="badge badge-orange">⚡ Near pg 1</span></td></tr>
+        <tr><td>local service ads management</td><td>4</td><td>1,382</td><td class="ctr-warn">0.29%</td><td>10.5</td><td><span class="badge badge-orange">⚡ Near pg 1</span></td></tr>
+        <tr><td>marketing agency bradenton</td><td>4</td><td>199</td><td class="ctr-good">2.0%</td><td>4.8</td><td><span class="badge badge-green">Local</span></td></tr>
+        <tr><td>car rental marketing</td><td>3</td><td>3,995</td><td class="ctr-bad">0.08%</td><td>9.7</td><td><span class="badge badge-orange">⚡ Near pg 1</span></td></tr>
+        <tr><td>seo for contractors</td><td>3</td><td>6,695</td><td class="ctr-bad">0.04%</td><td>31.8</td><td><span class="badge badge-orange">Service</span></td></tr>
+        <tr><td>gbp management agency</td><td>2</td><td>209</td><td class="ctr-warn">0.96%</td><td>3.8</td><td><span class="badge badge-green">⚡ Top 4!</span></td></tr>
+        <tr><td>digital marketing for roofers</td><td>2</td><td>3,521</td><td class="ctr-bad">0.06%</td><td>28.5</td><td><span class="badge badge-orange">Service</span></td></tr>
+        <tr><td>local service ads for hvac</td><td>2</td><td>264</td><td class="ctr-warn">0.76%</td><td>14.1</td><td><span class="badge badge-orange">Service</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📄 Top Pages by GSC Performance (Oct 2025–Apr 2026)</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Page</th><th>Impressions</th><th>Position</th><th>Clicks</th><th>CTR</th></tr></thead>
+      <tbody>
+        <tr><td>/services/search-engine-optimization-for-hvac/ <span class="badge badge-red">CRITICAL</span></td><td>135,657</td><td class="rank-bad">31.9</td><td>10</td><td class="ctr-bad">0.01%</td></tr>
+        <tr><td>/who-we-help/digital-marketing-for-plumbers/ <span class="badge badge-red">CRITICAL</span></td><td>105,574</td><td class="rank-bad">27.8</td><td>26</td><td class="ctr-bad">0.02%</td></tr>
+        <tr><td>/who-we-help/digital-marketing-for-home-services/</td><td>60,496</td><td class="rank-bad">24.4</td><td>23</td><td class="ctr-bad">0.04%</td></tr>
+        <tr><td>/ (Homepage)</td><td>51,558</td><td class="rank-warn">13.9</td><td>1,018</td><td class="ctr-warn">2.0%</td></tr>
+        <tr><td>/services/google-business-profile/ <span class="badge badge-orange">Near pg 2</span></td><td>42,073</td><td class="rank-warn">19.8</td><td>49</td><td class="ctr-bad">0.12%</td></tr>
+        <tr><td>/who-we-help/digital-marketing-for-hvac/</td><td>40,582</td><td class="rank-bad">41.6</td><td>5</td><td class="ctr-bad">0.01%</td></tr>
+        <tr><td>/who-we-help/digital-marketing-for-electricians/</td><td>39,754</td><td class="rank-bad">31.3</td><td>2</td><td class="ctr-bad">0.01%</td></tr>
+        <tr><td>/services/google-guaranteed-local-services-ads-for-roofers/ <span class="badge badge-green">Top 10</span></td><td>38,113</td><td class="rank-warn">10.3</td><td>33</td><td class="ctr-bad">0.09%</td></tr>
+        <tr><td>/services/google-guaranteed-local-services-ads/</td><td>35,443</td><td class="rank-bad">24.3</td><td>85</td><td class="ctr-bad">0.24%</td></tr>
+        <tr><td>/who-we-help/digital-marketing-for-roofers/</td><td>33,255</td><td class="rank-bad">44.7</td><td>5</td><td class="ctr-bad">0.02%</td></tr>
+        <tr><td>/services/search-engine-optimization-for-electricians/ <span class="badge badge-red">Page 6!</span></td><td>27,392</td><td class="rank-bad">57.8</td><td>1</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/services/google-guaranteed-local-services-ads-for-plumbers/</td><td>27,077</td><td class="rank-warn">14.0</td><td>35</td><td class="ctr-bad">0.13%</td></tr>
+        <tr><td>/services/website-design-for-plumbers/</td><td>26,894</td><td class="rank-bad">48.7</td><td>1</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/services/google-guaranteed-local-services-ads-for-hvac/</td><td>26,114</td><td class="rank-warn">14.8</td><td>23</td><td class="ctr-bad">0.09%</td></tr>
+        <tr><td>/?utm_source=google&utm_medium=gbp (Maps)</td><td>24,594</td><td class="rank-good">4.7</td><td>128</td><td class="ctr-warn">0.52%</td></tr>
+        <tr><td>/services/search-engine-optimization-for-chiropractors/ <span class="badge badge-red">Page 6</span></td><td>19,544</td><td class="rank-bad">51.4</td><td>1</td><td class="ctr-bad">0.01%</td></tr>
+        <tr><td>/services/search-engine-optimization-for-contractors/</td><td>17,139</td><td class="rank-bad">40.5</td><td>4</td><td class="ctr-bad">0.02%</td></tr>
+        <tr><td>/who-we-help/digital-marketing-for-hvac/</td><td>40,582</td><td class="rank-bad">41.6</td><td>5</td><td class="ctr-bad">0.01%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">📱 Device Breakdown</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="deviceChart"></canvas></div>
+      <table style="margin-top:10px"><thead><tr><th>Device</th><th>Clicks</th><th>CTR</th></tr></thead>
+      <tbody>
+        <tr><td>Desktop</td><td>856</td><td class="ctr-bad">0.13%</td></tr>
+        <tr><td>Mobile</td><td>299</td><td class="ctr-bad">0.17%</td></tr>
+        <tr><td>Tablet</td><td>3</td><td class="ctr-bad">0.09%</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-title">🔍 Key GSC Insights</div>
+      <div class="insight-box red" style="margin-bottom:10px">
+        <div class="insight-title">🚨 Brand = 37% of All Clicks</div>
+        <p>"real time marketing" + variants = 429 of 1,158 clicks (37%). The site relies heavily on brand recognition. Non-brand clicks are growing but CTR on service pages remains below 0.2% — major content upgrade needed.</p>
+      </div>
+      <div class="insight-box orange">
+        <div class="insight-title">⚠️ "GBP Management Agency" — Position 3.8!</div>
+        <p>Ranking <strong>position 3.8</strong> for "gbp management agency" with only 2 clicks on 209 impressions — this should be generating 20+ clicks. The title tag likely doesn't match search intent. Rewrite to include "GBP Management Agency" explicitly.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GA4 -->
+<div id="tab-ga4" class="tab-pane">
+  <div class="section-title">GA4 Analytics</div>
+  <div class="section-sub">Property 320140175 · Jan–Apr 2026 · Includes client portal traffic</div>
+  <div class="kpi-grid">
+    <div class="kpi-card orange"><div class="kpi-label">Total Sessions</div><div class="kpi-value">53,290</div><div class="kpi-delta down">↓ -37% Jan→Apr</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total Users</div><div class="kpi-value">32,928</div><div class="kpi-delta neutral">32,022 new users</div></div>
+    <div class="kpi-card"><div class="kpi-label">Engagement Rate</div><div class="kpi-value">44.9%</div><div class="kpi-delta up">↑ Improving monthly</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Phone Conversions</div><div class="kpi-value">1,019</div><div class="kpi-delta up">↑ Primary KPI</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Paid Conversions</div><div class="kpi-value">669</div><div class="kpi-delta up">↑ 22.4% conv. rate</div></div>
+    <div class="kpi-card"><div class="kpi-label">Page Views</div><div class="kpi-value">144,460</div><div class="kpi-delta neutral">~2.7 pages/session</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">Bounce Rate</div><div class="kpi-value">55.1%</div><div class="kpi-delta neutral">Improving</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Avg Duration</div><div class="kpi-value">4:28</div><div class="kpi-delta up">↑ Strong engagement</div></div>
+  </div>
+
+  <div class="insight-box orange" style="margin-bottom:20px">
+    <div class="insight-title">⚠️ Important: GA4 Includes Client Portal Traffic</div>
+    <p>The /login (8,712 views), /dashboard (3,238), /reports (3,295), /rtr/ pages, and /review/ pages are all <strong>client-facing SaaS portal pages — not marketing website visitors</strong>. Referral traffic (32.7% / 17,443 sessions) largely represents clients logging in. For true marketing performance, isolate website-only sessions using a hostname filter or separate GA4 property for the platform.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="card"><div class="card-title">📈 Monthly Sessions</div><div class="chart-wrap"><canvas id="sessionsChart"></canvas></div></div>
+    <div class="card"><div class="card-title">📊 Traffic by Channel</div><div class="chart-wrap"><canvas id="channelsChart"></canvas></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 Monthly GA4 Performance</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Month</th><th>Sessions</th><th>Users</th><th>Engaged Sessions</th><th>Engagement Rate</th><th>Avg Duration</th></tr></thead>
+      <tbody>
+        <tr><td>Jan 2026</td><td>15,908</td><td>10,924</td><td>6,643</td><td class="ctr-warn">41.8%</td><td>4:26</td></tr>
+        <tr><td>Feb 2026</td><td>13,279</td><td>8,454</td><td>6,029</td><td class="ctr-warn">45.4%</td><td>4:43</td></tr>
+        <tr><td>Mar 2026</td><td>13,200</td><td>8,193</td><td>6,093</td><td class="ctr-warn">46.2%</td><td>5:40</td></tr>
+        <tr><td>Apr 2026</td><td>10,081</td><td>6,165</td><td>4,797</td><td class="ctr-warn">47.6%</td><td>5:27</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">📊 Traffic Sources</div>
+      <table><thead><tr><th>Channel</th><th>Sessions</th><th>Share</th><th>Conversions</th></tr></thead>
+      <tbody>
+        <tr><td>Direct</td><td>23,907</td><td>44.9%</td><td>292</td></tr>
+        <tr><td>Referral (incl. portal)</td><td>17,443</td><td>32.7%</td><td>26</td></tr>
+        <tr><td>Organic Search</td><td>7,301</td><td>13.7%</td><td>52</td></tr>
+        <tr><td>Paid Search</td><td>2,990</td><td>5.6%</td><td><strong>669</strong></td></tr>
+        <tr><td>Email</td><td>556</td><td>1.0%</td><td>20</td></tr>
+        <tr><td>Organic Social</td><td>305</td><td>0.6%</td><td>6</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-title">🎯 Conversions</div>
+      <table><thead><tr><th>Event</th><th>Count</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>📞 Phone Number Clicks</td><td><strong>1,019</strong></td><td><span class="badge badge-green">Primary KPI</span></td></tr>
+        <tr><td>🖱️ Link Clicks (conv)</td><td>63</td><td>CTA clicks tracked</td></tr>
+        <tr><td>📞 Phone Calls</td><td>31</td><td>Direct call tracking</td></tr>
+        <tr><td>💡 Partner Program Views</td><td>17</td><td>Partner interest signal</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📄 Top Pages by Views (Marketing Site Only)</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Page</th><th>Views</th><th>Users</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>/ (Homepage)</td><td>6,936</td><td>2,902</td><td>Primary entry point</td></tr>
+        <tr><td>/contact/</td><td>1,850</td><td>1,185</td><td>High-intent — 24 GSC clicks</td></tr>
+        <tr><td>/services/google-guaranteed-local-services-ads/</td><td>1,684</td><td>1,245</td><td>Top service page</td></tr>
+        <tr><td>/services/search-engine-optimization/</td><td>1,445</td><td>741</td><td>Main SEO page</td></tr>
+        <tr><td>/get-to-know-us/</td><td>~950</td><td>~650</td><td>About/team page</td></tr>
+        <tr><td>/testimonials/</td><td>~500</td><td>~400</td><td>Strong trust page</td></tr>
+        <tr><td>/portfolio/</td><td>~450</td><td>~350</td><td>Case studies</td></tr>
+        <tr><td>/who-we-help/car-rental/</td><td>~420</td><td>~350</td><td>Niche page performing</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="insight-grid">
+    <div class="insight-box green">
+      <div class="insight-title">✅ Paid Search — Exceptional ROI</div>
+      <p>2,990 paid sessions generating <strong>669 conversions = 22.4% conversion rate</strong>. For a B2B marketing agency, this is exceptional (industry avg 2–5%). Scale this channel — every additional $1K in paid budget likely generates 2–3 qualified leads based on current rates.</p>
+    </div>
+    <div class="insight-box orange">
+      <div class="insight-title">⚠️ Session Decline Needs Investigation</div>
+      <p>Sessions fell from 15,908 (Jan) to 10,081 (Apr) = -37%. However, <strong>engagement rate improved from 41.8% to 47.6%</strong> as sessions declined, suggesting the lower-quality traffic (likely portal bounce traffic) is falling away. Set up GA4 hostname filter to separate portal from website.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT AUDIT -->
+<div id="tab-content" class="tab-pane">
+  <div class="section-title">Content Audit — All Pages</div>
+  <div class="section-sub">200 pages analyzed · Oct 2025–Apr 2026 · Marketing website pages only (portal excluded)</div>
+
+  <div class="insight-box red" style="margin-bottom:20px">
+    <div class="insight-title">🚨 Core Issue: Service × Industry Pages Ranking Page 3–6</div>
+    <p>Real Time Marketing has an excellent content architecture — 12+ industry-specific service pages covering LSA, SEO, GBP, website design, and PPC for each vertical. However, <strong>most rank positions 25–65</strong>, generating millions of impressions with almost no clicks. The LSA for Roofers page (pos 10.3) proves the architecture CAN rank. Every other page needs the same depth of content: real client case studies, specific ROI numbers, FAQ schema, and pricing transparency.</p>
+  </div>
+
+  <div class="kpi-grid" style="margin-bottom:20px">
+    <div class="kpi-card red"><div class="kpi-label">Critical (fix now)</div><div class="kpi-value">8</div><div class="kpi-delta down">50K+ impr, pos >25</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">High Priority</div><div class="kpi-value">22</div><div class="kpi-delta down">10K+ impr, pos >20</div></div>
+    <div class="kpi-card"><div class="kpi-label">Monitor/Optimize</div><div class="kpi-value">35</div><div class="kpi-delta neutral">Pos 10–20</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Performing</div><div class="kpi-value">18</div><div class="kpi-delta up">Pos ≤12, generating clicks</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px;padding:14px 18px">
+    <div class="card-title" style="margin-bottom:10px">🔍 Filter Pages</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="filterP('ALL')" class="filter-btn active" data-pf="ALL">All Pages</button>
+      <button onclick="filterP('CRITICAL')" class="filter-btn" data-pf="CRITICAL" style="background:#FEE2E2;color:#991B1B">🔴 Critical</button>
+      <button onclick="filterP('HIGH')" class="filter-btn" data-pf="HIGH" style="background:#FEF3C7;color:#92400E">🟠 High</button>
+      <button onclick="filterP('MEDIUM')" class="filter-btn" data-pf="MEDIUM" style="background:#F1F5F9;color:#475569">🟡 Medium</button>
+      <button onclick="filterP('MONITOR')" class="filter-btn" data-pf="MONITOR" style="background:#DBEAFE;color:#1D4ED8">👁 Monitor</button>
+      <button onclick="filterP('GOOD')" class="filter-btn" data-pf="GOOD" style="background:#DCFCE7;color:#15803D">✅ Good</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 All Pages — Priority &amp; Recommendations</div>
+    <div class="tbl-wrap"><table id="ptable">
+      <thead><tr><th style="width:90px">Priority</th><th>Page</th><th style="width:90px;text-align:right">Impressions</th><th style="width:70px;text-align:right">Position</th><th style="width:55px;text-align:right">Clicks</th><th style="width:60px;text-align:right">CTR</th><th>Recommendation</th></tr></thead>
+      <tbody id="ptbody">
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization-for-hvac/</td><td style="text-align:right">135,657</td><td class="rank-bad" style="text-align:right">31.9</td><td style="text-align:right">10</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/digital-marketing-for-plumbers/</td><td style="text-align:right">105,574</td><td class="rank-bad" style="text-align:right">27.8</td><td style="text-align:right">26</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Add proven ROI stats, client results, LSA case study. Target "digital marketing plumbing company" — 105K impressions</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/digital-marketing-for-home-services/</td><td style="text-align:right">60,496</td><td class="rank-warn" style="text-align:right">24.4</td><td style="text-align:right">23</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Strengthen with industry benchmarks, pricing transparency, FAQ schema — 60K impr, pos 24.4</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/</td><td style="text-align:right">51,558</td><td class="rank-warn" style="text-align:right">13.9</td><td style="text-align:right">1018</td><td class="ctr-good" style="text-align:right">1.97%</td><td style="font-size:11.5px">Homepage performing well (pos 13.9, 1018 clicks). Add FAQ schema + service schema to maintain and improve</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile/</td><td style="text-align:right">42,073</td><td class="rank-warn" style="text-align:right">19.8</td><td style="text-align:right">49</td><td class="ctr-bad" style="text-align:right">0.12%</td><td style="font-size:11.5px">GBP management page at pos 19.8 — near page 2! Add pricing, FAQ schema, GBP optimization checklist</td></tr>
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/digital-marketing-for-hvac/</td><td style="text-align:right">40,582</td><td class="rank-bad" style="text-align:right">41.6</td><td style="text-align:right">5</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Add HVAC-specific case studies, seasonal campaign results, ROI stats. Pos 41.6 = page 5 — full rewrite needed</td></tr>
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/digital-marketing-for-electricians/</td><td style="text-align:right">39,754</td><td class="rank-bad" style="text-align:right">31.3</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Electrician niche case studies, LSA success stories, cost guide. Pos 31.3 — page 4</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-roofers/</td><td style="text-align:right">38,113</td><td class="rank-good" style="text-align:right">10.3</td><td style="text-align:right">33</td><td class="ctr-bad" style="text-align:right">0.09%</td><td style="font-size:11.5px">Already performing (pos 10.3). Add FAQ schema + title CTR optimization to break top 5</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads/</td><td style="text-align:right">35,443</td><td class="rank-warn" style="text-align:right">24.3</td><td style="text-align:right">85</td><td class="ctr-warn" style="text-align:right">0.24%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/digital-marketing-for-roofers/</td><td style="text-align:right">33,255</td><td class="rank-bad" style="text-align:right">44.7</td><td style="text-align:right">5</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Roofer marketing case studies, storm season campaigns, FAQ schema. Pos 44.7 = page 5</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization-for-electricians/</td><td style="text-align:right">27,392</td><td class="rank-bad" style="text-align:right">57.8</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.0%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-plumbers/</td><td style="text-align:right">27,077</td><td class="rank-warn" style="text-align:right">14.0</td><td style="text-align:right">35</td><td class="ctr-bad" style="text-align:right">0.13%</td><td style="font-size:11.5px">Good position (14). Strengthen with plumber LSA case study, cost guide, ROI examples</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/website-design-for-plumbers/</td><td style="text-align:right">26,894</td><td class="rank-bad" style="text-align:right">48.7</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.0%</td><td style="font-size:11.5px">Add plumber website examples/portfolio, before/after, pricing, FAQ. Pos 48.7 = page 5</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-hvac/</td><td style="text-align:right">26,114</td><td class="rank-warn" style="text-align:right">14.8</td><td style="text-align:right">23</td><td class="ctr-bad" style="text-align:right">0.09%</td><td style="font-size:11.5px">Good (pos 14.8). Add HVAC LSA seasonal campaign examples, FAQ schema</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/?utm_source=google&utm_medium=gbp&utm_campaign=maps</td><td style="text-align:right">24,594</td><td class="rank-good" style="text-align:right">4.7</td><td style="text-align:right">128</td><td class="ctr-warn" style="text-align:right">0.52%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/contact/</td><td style="text-align:right">20,563</td><td class="rank-good" style="text-align:right">5.0</td><td style="text-align:right">30</td><td class="ctr-bad" style="text-align:right">0.15%</td><td style="font-size:11.5px">Good (pos 5.0). Maintain. Ensure contact form has proper conversion tracking</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization-for-chiropractors/</td><td style="text-align:right">19,544</td><td class="rank-bad" style="text-align:right">51.4</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/services/</td><td style="text-align:right">19,399</td><td class="rank-good" style="text-align:right">5.6</td><td style="text-align:right">6</td><td class="ctr-bad" style="text-align:right">0.03%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/landscapers/</td><td style="text-align:right">19,371</td><td class="rank-bad" style="text-align:right">38.5</td><td style="text-align:right">3</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Landscaper marketing case studies, seasonal SEO, FAQ schema. Pos 38.5</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/get-to-know-us/</td><td style="text-align:right">19,050</td><td class="rank-good" style="text-align:right">9.5</td><td style="text-align:right">26</td><td class="ctr-bad" style="text-align:right">0.14%</td><td style="font-size:11.5px">Good (pos 9.5). Add team bios, agency certifications, Google Partner badge</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/medspa/</td><td style="text-align:right">18,748</td><td class="rank-bad" style="text-align:right">45.2</td><td style="text-align:right">6</td><td class="ctr-bad" style="text-align:right">0.03%</td><td style="font-size:11.5px">MedSpa marketing specifics: HIPAA compliance, before/after content rules, local SEO. Pos 45.2</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/digital-marketing-for-tree-service-companies/</td><td style="text-align:right">17,647</td><td class="rank-warn" style="text-align:right">22.8</td><td style="text-align:right">12</td><td class="ctr-bad" style="text-align:right">0.07%</td><td style="font-size:11.5px">Tree service marketing: storm season campaigns, local SEO, case study</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/website-design-for-hvac/</td><td style="text-align:right">17,331</td><td class="rank-bad" style="text-align:right">44.1</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">HVAC website examples, mobile-first design angle, schema. Pos 44.1 = page 5</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization-for-contractors/</td><td style="text-align:right">17,139</td><td class="rank-bad" style="text-align:right">40.5</td><td style="text-align:right">4</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/pest-control/</td><td style="text-align:right">16,653</td><td class="rank-bad" style="text-align:right">29.8</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Pest control marketing: seasonal campaigns, GBP optimization, case study. Pos 29.8</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/pay-per-click-advertising-for-plumbers/</td><td style="text-align:right">16,131</td><td class="rank-bad" style="text-align:right">39.9</td><td style="text-align:right">3</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Plumber PPC case study, cost-per-lead examples, Google Ads vs LSA comparison</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/local-business-optimization/</td><td style="text-align:right">15,391</td><td class="rank-bad" style="text-align:right">26.3</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Clarify what this service includes — SEO + GBP + LSA bundle? Add clear scope + FAQ</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/pay-per-click-advertising-for-hvac/</td><td style="text-align:right">12,839</td><td class="rank-bad" style="text-align:right">40.0</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">HVAC PPC seasonal campaigns, cost guide, ROI examples</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/car-rental/</td><td style="text-align:right">12,824</td><td class="rank-good" style="text-align:right">10.3</td><td style="text-align:right">32</td><td class="ctr-warn" style="text-align:right">0.25%</td><td style="font-size:11.5px">Already performing well (pos 10.3, 32 clicks). Add FAQ schema + schema markup</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization/</td><td style="text-align:right">12,229</td><td class="rank-bad" style="text-align:right">42.2</td><td style="text-align:right">5</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization-for-tree-services/</td><td style="text-align:right">11,443</td><td class="rank-warn" style="text-align:right">23.0</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Tree service marketing: storm season campaigns, local SEO, case study</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-landscaping-contractors/</td><td style="text-align:right">11,292</td><td class="rank-good" style="text-align:right">11.4</td><td style="text-align:right">9</td><td class="ctr-bad" style="text-align:right">0.08%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-pest-control/</td><td style="text-align:right">10,706</td><td class="rank-warn" style="text-align:right">13.2</td><td style="text-align:right">13</td><td class="ctr-bad" style="text-align:right">0.12%</td><td style="font-size:11.5px">Pest control marketing: seasonal campaigns, GBP optimization, case study. Pos 29.8</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/blog/results-driven-success-the-rise-of-pay-for-performance-marketing-models/</td><td style="text-align:right">10,646</td><td class="rank-warn" style="text-align:right">21.5</td><td style="text-align:right">11</td><td class="ctr-bad" style="text-align:right">0.1%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/social-media-marketing/</td><td style="text-align:right">10,490</td><td class="rank-good" style="text-align:right">11.6</td><td style="text-align:right">3</td><td class="ctr-bad" style="text-align:right">0.03%</td><td style="font-size:11.5px">Social media page at pos 11.6. Add FAQ schema + title optimization to break top 5</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/house-cleaning/</td><td style="text-align:right">10,434</td><td class="rank-warn" style="text-align:right">24.4</td><td style="text-align:right">7</td><td class="ctr-bad" style="text-align:right">0.07%</td><td style="font-size:11.5px">House cleaning marketing: review strategy, GBP, social proof. Pos 24.4</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization-for-pest-control/</td><td style="text-align:right">10,070</td><td class="rank-bad" style="text-align:right">63.4</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Pest control marketing: seasonal campaigns, GBP optimization, case study. Pos 29.8</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/sewage-and-septic-pros/</td><td style="text-align:right">9,875</td><td class="rank-warn" style="text-align:right">12.1</td><td style="text-align:right">6</td><td class="ctr-bad" style="text-align:right">0.06%</td><td style="font-size:11.5px">Septic company marketing: GBP optimization, local SEO specifics. Pos 12.1</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-lawyers/</td><td style="text-align:right">9,866</td><td class="rank-bad" style="text-align:right">44.5</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Pos 44.5 — add attorney LSA cost breakdown, verification process, case study</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-electricians/</td><td style="text-align:right">9,765</td><td class="rank-good" style="text-align:right">11.5</td><td style="text-align:right">8</td><td class="ctr-bad" style="text-align:right">0.08%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization-for-auto-glass/</td><td style="text-align:right">9,603</td><td class="rank-warn" style="text-align:right">15.9</td><td style="text-align:right">13</td><td class="ctr-bad" style="text-align:right">0.14%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-to-handle-duplicate-listings-on-google-business-profile/</td><td style="text-align:right">9,565</td><td class="rank-warn" style="text-align:right">13.0</td><td style="text-align:right">16</td><td class="ctr-bad" style="text-align:right">0.17%</td><td style="font-size:11.5px">GBP management page at pos 19.8 — near page 2! Add pricing, FAQ schema, GBP optimization checklist</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-general-contractors/</td><td style="text-align:right">9,500</td><td class="rank-warn" style="text-align:right">14.3</td><td style="text-align:right">6</td><td class="ctr-bad" style="text-align:right">0.06%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/solar/</td><td style="text-align:right">9,312</td><td class="rank-bad" style="text-align:right">29.9</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Solar marketing: IRA incentive content, lead gen strategy, case study. Pos 29.9</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-plumbers/</td><td style="text-align:right">8,303</td><td class="rank-warn" style="text-align:right">12.4</td><td style="text-align:right">12</td><td class="ctr-bad" style="text-align:right">0.14%</td><td style="font-size:11.5px">Good (pos 12.4). Add plumber GBP case study, FAQ schema to push to top 5</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/digital-marketing-for-manufacturers/</td><td style="text-align:right">7,625</td><td class="rank-bad" style="text-align:right">61.3</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Pos 61.3 — B2B manufacturing marketing is very different niche. Complete rewrite or consider removing</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/weight-loss-clinics/</td><td style="text-align:right">7,329</td><td class="rank-good" style="text-align:right">10.1</td><td style="text-align:right">12</td><td class="ctr-bad" style="text-align:right">0.16%</td><td style="font-size:11.5px">Weight loss clinic marketing: HIPAA-safe content, testimonials, FAQ. Pos 10.1 — good!</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-septic-and-sewage-system-contractors/</td><td style="text-align:right">7,191</td><td class="rank-warn" style="text-align:right">22.5</td><td style="text-align:right">15</td><td class="ctr-warn" style="text-align:right">0.21%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/website-design-for-pest-control/</td><td style="text-align:right">7,163</td><td class="rank-bad" style="text-align:right">51.5</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Pest control website examples, conversion-focused design, CTA strategy. Pos 51.5</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/autoglass/</td><td style="text-align:right">7,027</td><td class="rank-warn" style="text-align:right">17.6</td><td style="text-align:right">21</td><td class="ctr-warn" style="text-align:right">0.3%</td><td style="font-size:11.5px">Auto glass marketing case study, LSA for auto glass, local SEO. Pos 17.6</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/</td><td style="text-align:right">6,975</td><td class="rank-good" style="text-align:right">6.1</td><td style="text-align:right">3</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization-for-consultants/</td><td style="text-align:right">6,965</td><td class="rank-bad" style="text-align:right">27.4</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/pay-per-click-advertising/</td><td style="text-align:right">6,798</td><td class="rank-bad" style="text-align:right">30.7</td><td style="text-align:right">4</td><td class="ctr-bad" style="text-align:right">0.06%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-solar-services/</td><td style="text-align:right">6,459</td><td class="rank-good" style="text-align:right">8.2</td><td style="text-align:right">19</td><td class="ctr-warn" style="text-align:right">0.29%</td><td style="font-size:11.5px">Solar marketing: IRA incentive content, lead gen strategy, case study. Pos 29.9</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/partnership-program/</td><td style="text-align:right">6,272</td><td class="rank-warn" style="text-align:right">15.7</td><td style="text-align:right">6</td><td class="ctr-bad" style="text-align:right">0.1%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/google-business-profile-qa-how-to-use-it-to-your-advantage/</td><td style="text-align:right">5,824</td><td class="rank-good" style="text-align:right">10.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/google-ads-and-facebook-retargeting/</td><td style="text-align:right">5,772</td><td class="rank-bad" style="text-align:right">32.4</td><td style="text-align:right">7</td><td class="ctr-bad" style="text-align:right">0.12%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/social-media-reach-vs-impressions-a-quick-look-at-how-they-differ/</td><td style="text-align:right">5,615</td><td class="rank-bad" style="text-align:right">31.4</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/top-social-media-platforms-for-home-service-companies/</td><td style="text-align:right">5,283</td><td class="rank-warn" style="text-align:right">15.7</td><td style="text-align:right">11</td><td class="ctr-warn" style="text-align:right">0.21%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-hvac/</td><td style="text-align:right">5,245</td><td class="rank-warn" style="text-align:right">22.8</td><td style="text-align:right">5</td><td class="ctr-bad" style="text-align:right">0.1%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/exterminating-the-competition-strategies-for-pest-control-marketing/</td><td style="text-align:right">4,843</td><td class="rank-bad" style="text-align:right">36.6</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Pest control marketing: seasonal campaigns, GBP optimization, case study. Pos 29.8</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/website-design-for-roofers/</td><td style="text-align:right">4,580</td><td class="rank-bad" style="text-align:right">47.5</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/portfolio/</td><td style="text-align:right">4,523</td><td class="rank-good" style="text-align:right">5.6</td><td style="text-align:right">17</td><td class="ctr-warn" style="text-align:right">0.38%</td><td style="font-size:11.5px">Good (pos 4.7). Add industry filters, before/after results, client logos</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-contractors/</td><td style="text-align:right">4,091</td><td class="rank-bad" style="text-align:right">25.4</td><td style="text-align:right">4</td><td class="ctr-bad" style="text-align:right">0.1%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/pay-per-click-advertising-for-roofers/</td><td style="text-align:right">3,728</td><td class="rank-bad" style="text-align:right">49.0</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.03%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-guaranteed-local-services-ads-for-trenchless-pipe-and-sewer-repair/</td><td style="text-align:right">3,498</td><td class="rank-bad" style="text-align:right">33.1</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.03%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/common-mistakes-to-avoid-in-facebook-retargeting-campaigns/</td><td style="text-align:right">3,350</td><td class="rank-warn" style="text-align:right">14.9</td><td style="text-align:right">3</td><td class="ctr-bad" style="text-align:right">0.09%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/content-development/</td><td style="text-align:right">3,139</td><td class="rank-good" style="text-align:right">10.9</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.03%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-roofers/</td><td style="text-align:right">2,948</td><td class="rank-warn" style="text-align:right">20.2</td><td style="text-align:right">4</td><td class="ctr-bad" style="text-align:right">0.14%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/defining-exactly-what-seo-and-sem-are/</td><td style="text-align:right">2,894</td><td class="rank-bad" style="text-align:right">71.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/the-benefits-of-seo-for-your-roofing-business/</td><td style="text-align:right">2,749</td><td class="rank-bad" style="text-align:right">73.3</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-consultants/</td><td style="text-align:right">2,439</td><td class="rank-bad" style="text-align:right">30.4</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/website-design-for-tree-services/</td><td style="text-align:right">2,426</td><td class="rank-bad" style="text-align:right">34.5</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Tree service marketing: storm season campaigns, local SEO, case study</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/social-media-marketing-for-trenchless-pipe-and-sewer-repair-company/</td><td style="text-align:right">2,369</td><td class="rank-good" style="text-align:right">11.7</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.08%</td><td style="font-size:11.5px">Social media page at pos 11.6. Add FAQ schema + title optimization to break top 5</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/a-closer-look-at-lsa-and-google-ads-exploring-key-differences/</td><td style="text-align:right">2,327</td><td class="rank-good" style="text-align:right">11.6</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/partnership-program/our-partnership-with-sendjim/</td><td style="text-align:right">2,321</td><td class="rank-good" style="text-align:right">10.6</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.09%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-chiropractors/</td><td style="text-align:right">2,282</td><td class="rank-good" style="text-align:right">10.0</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/the-importance-of-ad-frequency-and-timing-in-facebook-retargeting/</td><td style="text-align:right">2,238</td><td class="rank-warn" style="text-align:right">16.2</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/auto-shop/</td><td style="text-align:right">2,099</td><td class="rank-warn" style="text-align:right">23.4</td><td style="text-align:right">5</td><td class="ctr-warn" style="text-align:right">0.24%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/call-tracking/</td><td style="text-align:right">1,890</td><td class="rank-bad" style="text-align:right">27.0</td><td style="text-align:right">3</td><td class="ctr-bad" style="text-align:right">0.16%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-to-optimize-your-google-business-profile-for-voice-search/</td><td style="text-align:right">1,868</td><td class="rank-good" style="text-align:right">8.3</td><td style="text-align:right">4</td><td class="ctr-warn" style="text-align:right">0.21%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/website-design-for-trenchless-pipe-and-sewer-repair/</td><td style="text-align:right">1,817</td><td class="rank-warn" style="text-align:right">18.2</td><td style="text-align:right">3</td><td class="ctr-bad" style="text-align:right">0.17%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/wellness/</td><td style="text-align:right">1,650</td><td class="rank-good" style="text-align:right">11.6</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.06%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/consultants/</td><td style="text-align:right">1,618</td><td class="rank-warn" style="text-align:right">21.9</td><td style="text-align:right">9</td><td class="ctr-warn" style="text-align:right">0.56%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/real-time-marketing-platform-terms-of-service/</td><td style="text-align:right">1,574</td><td class="rank-good" style="text-align:right">10.6</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.13%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-for-trenchless-pipe-and-sewer-repair/</td><td style="text-align:right">1,557</td><td class="rank-warn" style="text-align:right">14.3</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.06%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-tree-services/</td><td style="text-align:right">1,525</td><td class="rank-warn" style="text-align:right">16.5</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.07%</td><td style="font-size:11.5px">Tree service marketing: storm season campaigns, local SEO, case study</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/search-engine-optimization-for-dentists/</td><td style="text-align:right">1,516</td><td class="rank-bad" style="text-align:right">61.5</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.07%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/seo-for-rebrands-how-to-protect-your-rankings-when-changing-your-brand/</td><td style="text-align:right">1,484</td><td class="rank-warn" style="text-align:right">17.6</td><td style="text-align:right">3</td><td class="ctr-warn" style="text-align:right">0.2%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-solar-companies/</td><td style="text-align:right">1,484</td><td class="rank-good" style="text-align:right">11.0</td><td style="text-align:right">3</td><td class="ctr-warn" style="text-align:right">0.2%</td><td style="font-size:11.5px">Solar marketing: IRA incentive content, lead gen strategy, case study. Pos 29.9</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/blog/graphic-design-for-different-platforms-adapting-your-marketing-for-web-social-and-mobile/</td><td style="text-align:right">1,452</td><td class="rank-good" style="text-align:right">10.4</td><td style="text-align:right">9</td><td class="ctr-warn" style="text-align:right">0.62%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/best-practices-for-timing-email-and-text-message-campaigns/</td><td style="text-align:right">1,369</td><td class="rank-good" style="text-align:right">6.5</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.07%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/contact-rtm-gp/</td><td style="text-align:right">1,347</td><td class="rank-good" style="text-align:right">9.2</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.15%</td><td style="font-size:11.5px">Good (pos 5.0). Maintain. Ensure contact form has proper conversion tracking</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/marketing-design/billboard-design/</td><td style="text-align:right">1,320</td><td class="rank-bad" style="text-align:right">40.4</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.15%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/the-ethics-of-seo-best-practices-and-avoiding-black-hat-techniques/</td><td style="text-align:right">1,300</td><td class="rank-bad" style="text-align:right">32.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/fitness-lifestyle/</td><td style="text-align:right">1,268</td><td class="rank-warn" style="text-align:right">22.4</td><td style="text-align:right">3</td><td class="ctr-warn" style="text-align:right">0.24%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/some-of-the-most-memorable-social-media-marketing-campaigns-and-why-they-worked/</td><td style="text-align:right">1,177</td><td class="rank-bad" style="text-align:right">59.0</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Social media page at pos 11.6. Add FAQ schema + title optimization to break top 5</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/how-to-maintain-your-google-guarantee-badge-and-avoid-penalties/</td><td style="text-align:right">1,125</td><td class="rank-warn" style="text-align:right">24.6</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.09%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/who-we-help/lawyers/</td><td style="text-align:right">1,120</td><td class="rank-bad" style="text-align:right">53.7</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.09%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-pest-control-companies/</td><td style="text-align:right">1,064</td><td class="rank-bad" style="text-align:right">29.8</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.09%</td><td style="font-size:11.5px">Pest control marketing: seasonal campaigns, GBP optimization, case study. Pos 29.8</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/personalizing-retargeting-ads-the-key-to-higher-engagement/</td><td style="text-align:right">1,025</td><td class="rank-warn" style="text-align:right">24.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/how-to-get-more-customer-reviews-on-your-google-business-profile/</td><td style="text-align:right">970</td><td class="rank-warn" style="text-align:right">24.8</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.1%</td><td style="font-size:11.5px">GBP management page at pos 19.8 — near page 2! Add pricing, FAQ schema, GBP optimization checklist</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/dynamic-content-in-emails-personalization-beyond-name-insertion/</td><td style="text-align:right">898</td><td class="rank-good" style="text-align:right">8.0</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.11%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/tips-for-using-before-and-after-photos-to-boost-social-media-engagement/</td><td style="text-align:right">879</td><td class="rank-good" style="text-align:right">3.9</td><td style="text-align:right">3</td><td class="ctr-warn" style="text-align:right">0.34%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/the-difference-between-static-dynamic-cms-websites/</td><td style="text-align:right">777</td><td class="rank-good" style="text-align:right">6.3</td><td style="text-align:right">3</td><td class="ctr-warn" style="text-align:right">0.39%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/the-importance-of-consistent-branding-across-social-media-channels/</td><td style="text-align:right">766</td><td class="rank-good" style="text-align:right">8.0</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.13%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/website-design-for-auto-glass/</td><td style="text-align:right">735</td><td class="rank-warn" style="text-align:right">17.1</td><td style="text-align:right">4</td><td class="ctr-warn" style="text-align:right">0.54%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/digital-footprint-expansion-why-companies-today-need-digital-marketing-more-than-ever/</td><td style="text-align:right">688</td><td class="rank-warn" style="text-align:right">21.4</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.15%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/testimonials/</td><td style="text-align:right">655</td><td class="rank-good" style="text-align:right">6.2</td><td style="text-align:right">21</td><td class="ctr-good" style="text-align:right">3.21%</td><td style="font-size:11.5px">Good (pos 6.4). Add schema markup for reviews, client logos, industry breakdown</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/understanding-google-guarantee-a-game-changer-for-hvac-businesses/</td><td style="text-align:right">634</td><td class="rank-warn" style="text-align:right">12.8</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/the-benefits-of-google-local-service-ads-for-pest-control/</td><td style="text-align:right">619</td><td class="rank-bad" style="text-align:right">46.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Pest control marketing: seasonal campaigns, GBP optimization, case study. Pos 29.8</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/marketing-design/3d-image-and-video/</td><td style="text-align:right">592</td><td class="rank-bad" style="text-align:right">46.4</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.17%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/common-mistakes-to-avoid-when-managing-your-google-business-profile/</td><td style="text-align:right">573</td><td class="rank-warn" style="text-align:right">18.3</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.17%</td><td style="font-size:11.5px">GBP management page at pos 19.8 — near page 2! Add pricing, FAQ schema, GBP optimization checklist</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/</td><td style="text-align:right">557</td><td class="rank-warn" style="text-align:right">19.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/google-business-profile-management-for-dentists/</td><td style="text-align:right">533</td><td class="rank-bad" style="text-align:right">49.5</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.19%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/marketing-design/vehicle-wraps/</td><td style="text-align:right">517</td><td class="rank-bad" style="text-align:right">52.3</td><td style="text-align:right">3</td><td class="ctr-warn" style="text-align:right">0.58%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-ai-is-changing-the-way-we-ask-questions-and-what-that-means-for-brands/</td><td style="text-align:right">493</td><td class="rank-good" style="text-align:right">8.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/content-repurposing-strategies-one-piece-multiple-formats/</td><td style="text-align:right">438</td><td class="rank-good" style="text-align:right">4.9</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.23%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/the-importance-of-regular-updates-to-your-google-business-profile/</td><td style="text-align:right">436</td><td class="rank-good" style="text-align:right">4.9</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.23%</td><td style="font-size:11.5px">GBP management page at pos 19.8 — near page 2! Add pricing, FAQ schema, GBP optimization checklist</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/ai-overviews-when-google-reads-the-answer-to-you/</td><td style="text-align:right">431</td><td class="rank-good" style="text-align:right">9.9</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/partnership-program/our-partnership-with-smart-ac/</td><td style="text-align:right">412</td><td class="rank-good" style="text-align:right">9.6</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.24%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/local-seo-content-creating-location-specific-value/</td><td style="text-align:right">393</td><td class="rank-good" style="text-align:right">10.4</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-to-engage-your-audience-with-social-media-polls-and-interactive-features/</td><td style="text-align:right">376</td><td class="rank-good" style="text-align:right">7.4</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/optimizing-images-for-web-formats-compression-and-performance/</td><td style="text-align:right">372</td><td class="rank-good" style="text-align:right">9.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/short-term-vs-long-term-goals-in-social-media-marketing/</td><td style="text-align:right">368</td><td class="rank-good" style="text-align:right">5.6</td><td style="text-align:right">4</td><td class="ctr-good" style="text-align:right">1.09%</td><td style="font-size:11.5px">Social media page at pos 11.6. Add FAQ schema + title optimization to break top 5</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/services/marketing-design/logo-design/</td><td style="text-align:right">358</td><td class="rank-bad" style="text-align:right">36.8</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.28%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/the-impact-of-website-redesign-services-on-your-business-growth/</td><td style="text-align:right">285</td><td class="rank-good" style="text-align:right">10.3</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.35%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/boosting-leads-how-the-google-guarantee-can-increase-your-customer-base/</td><td style="text-align:right">277</td><td class="rank-good" style="text-align:right">7.5</td><td style="text-align:right">2</td><td class="ctr-warn" style="text-align:right">0.72%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/social-media-marketing-for-b2b-vs-b2c-key-differences-and-strategies/</td><td style="text-align:right">277</td><td class="rank-good" style="text-align:right">7.6</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.36%</td><td style="font-size:11.5px">Social media page at pos 11.6. Add FAQ schema + title optimization to break top 5</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/what-is-ai-mode-in-google-search-and-why-it-matters-to-everyone/</td><td style="text-align:right">276</td><td class="rank-warn" style="text-align:right">19.2</td><td style="text-align:right">2</td><td class="ctr-warn" style="text-align:right">0.72%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/businesses-that-can-greatly-benefit-from-seo/</td><td style="text-align:right">274</td><td class="rank-bad" style="text-align:right">25.6</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/privacy-policy/</td><td style="text-align:right">272</td><td class="rank-good" style="text-align:right">9.1</td><td style="text-align:right">2</td><td class="ctr-warn" style="text-align:right">0.74%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/sequential-retargeting-building-campaigns-that-tell-a-story/</td><td style="text-align:right">230</td><td class="rank-good" style="text-align:right">10.0</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/what-to-post-when-you-have-nothing-to-post-a-smart-social-media-strategy/</td><td style="text-align:right">212</td><td class="rank-good" style="text-align:right">9.1</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.47%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/customer-perception-what-the-google-guarantee-means-to-your-clients/</td><td style="text-align:right">201</td><td class="rank-bad" style="text-align:right">29.7</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/get-to-know-us/meet-the-team/</td><td style="text-align:right">187</td><td class="rank-good" style="text-align:right">4.2</td><td style="text-align:right">5</td><td class="ctr-good" style="text-align:right">2.67%</td><td style="font-size:11.5px">Good (pos 9.5). Add team bios, agency certifications, Google Partner badge</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/how-to-handle-negative-comments-and-reviews-on-social-media/</td><td style="text-align:right">166</td><td class="rank-bad" style="text-align:right">57.0</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.6%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/using-retargeting-ads-to-upsell-home-services/</td><td style="text-align:right">156</td><td class="rank-good" style="text-align:right">10.4</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-voice-search-is-shaping-user-intent-and-affecting-seo-tactics/</td><td style="text-align:right">150</td><td class="rank-good" style="text-align:right">11.2</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.67%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/the-ultimate-guide-to-setting-up-and-verifying-your-google-business-profile/</td><td style="text-align:right">147</td><td class="rank-good" style="text-align:right">8.1</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.68%</td><td style="font-size:11.5px">GBP management page at pos 19.8 — near page 2! Add pricing, FAQ schema, GBP optimization checklist</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/features-of-the-google-business-profile-you-may-not-be-taking-full-advantage-of/</td><td style="text-align:right">147</td><td class="rank-good" style="text-align:right">9.6</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/ad-fatigue-in-ppc-how-to-keep-your-campaigns-fresh-and-effective/</td><td style="text-align:right">146</td><td class="rank-warn" style="text-align:right">17.5</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.68%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/how-facebook-ads-help-trenchless-businesses-reach-their-target-market/</td><td style="text-align:right">142</td><td class="rank-warn" style="text-align:right">18.9</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/creating-high-converting-ppc-campaigns/</td><td style="text-align:right">133</td><td class="rank-warn" style="text-align:right">14.7</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/voice-search-and-mobile-seo-why-they-go-hand-in-hand/</td><td style="text-align:right">126</td><td class="rank-good" style="text-align:right">10.6</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/visual-hierarchy-guiding-user-eyes-through-your-website/</td><td style="text-align:right">116</td><td class="rank-good" style="text-align:right">6.4</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.86%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/optimizing-your-retargeting-ads-for-mobile-users/</td><td style="text-align:right">113</td><td class="rank-warn" style="text-align:right">18.7</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/technical-seo-fixes-that-can-help-improve-organic-traffic/</td><td style="text-align:right">106</td><td class="rank-good" style="text-align:right">8.2</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/personalizing-retargeting-ads-the-key-to-higher-engagement</td><td style="text-align:right">99</td><td class="rank-bad" style="text-align:right">27.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/time-based-retargeting-reaching-users-at-optimal-moments/</td><td style="text-align:right">99</td><td class="rank-good" style="text-align:right">5.7</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/googles-ai-mode-is-live-heres-how-to-stay-ahead/</td><td style="text-align:right">90</td><td class="rank-warn" style="text-align:right">21.5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-to-effectively-use-white-space-in-your-website-design/</td><td style="text-align:right">90</td><td class="rank-good" style="text-align:right">6.9</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/seasonal-ppc-campaign-planning-preparing-for-peak-periods/</td><td style="text-align:right">87</td><td class="rank-good" style="text-align:right">11.5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/subject-line-formulas-that-beat-industry-open-rates/</td><td style="text-align:right">76</td><td class="rank-good" style="text-align:right">4.8</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/supercharging-your-social-media-marketing-through-seasonal-campaigns/</td><td style="text-align:right">68</td><td class="rank-good" style="text-align:right">4.7</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Social media page at pos 11.6. Add FAQ schema + title optimization to break top 5</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/long-form-content-strategy-when-2000-words-actually-drive-results/</td><td style="text-align:right">62</td><td class="rank-good" style="text-align:right">8.2</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/mastering-seo-in-googles-ai-era-what-you-must-know/</td><td style="text-align:right">59</td><td class="rank-warn" style="text-align:right">12.6</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/evergreen-content-creating-timeless-content-that-ranks-consistently/</td><td style="text-align:right">55</td><td class="rank-good" style="text-align:right">5.8</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/email-content-strategy-beyond-newsletter-updates/</td><td style="text-align:right">52</td><td class="rank-good" style="text-align:right">5.2</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-social-media-shapes-consumer-choices-and-market-dynamics/</td><td style="text-align:right">51</td><td class="rank-good" style="text-align:right">6.5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-to-integrate-ppc-with-your-overall-digital-marketing-strategy/</td><td style="text-align:right">51</td><td class="rank-good" style="text-align:right">3.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-to-use-retargeting-to-promote-seasonal-home-services/</td><td style="text-align:right">48</td><td class="rank-good" style="text-align:right">9.0</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/category/retargeting-services/</td><td style="text-align:right">47</td><td class="rank-bad" style="text-align:right">32.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/the-rise-of-conversational-and-command-style-search/</td><td style="text-align:right">46</td><td class="rank-good" style="text-align:right">9.0</td><td style="text-align:right">1</td><td class="ctr-good" style="text-align:right">2.17%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/using-special-promos-to-maximize-the-effectivity-of-your-ppc-campaigns/</td><td style="text-align:right">42</td><td class="rank-warn" style="text-align:right">19.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/diy-seo-vs-hiring-an-expert-which-is-right-for-you/</td><td style="text-align:right">39</td><td class="rank-good" style="text-align:right">11.0</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/zero-click-search-is-the-web-losing-its-traffic/</td><td style="text-align:right">38</td><td class="rank-good" style="text-align:right">8.6</td><td style="text-align:right">1</td><td class="ctr-good" style="text-align:right">2.63%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/googles-ai-mode-friend-or-foe-for-seos/</td><td style="text-align:right">36</td><td class="rank-warn" style="text-align:right">24</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/is-it-time-to-rebrand-your-social-media-strategy-signs-to-look-for/</td><td style="text-align:right">32</td><td class="rank-good" style="text-align:right">7.2</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/from-keywords-to-ai-navigating-googles-new-search-era/</td><td style="text-align:right">30</td><td class="rank-good" style="text-align:right">6.7</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/voice-search-and-google-lsas-are-you-ready-for-the-shift/</td><td style="text-align:right">21</td><td class="rank-good" style="text-align:right">7.5</td><td style="text-align:right">3</td><td class="ctr-good" style="text-align:right">14.29%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/voice-search-optimization-how-to-make-your-site-voice-search-friendly/</td><td style="text-align:right">20</td><td class="rank-good" style="text-align:right">7.5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/mastering-the-art-of-a-b-testing-in-ppc-campaigns/</td><td style="text-align:right">18</td><td class="rank-good" style="text-align:right">3.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/landing-page-elements-that-kill-your-ppc-conversions/</td><td style="text-align:right">15</td><td class="rank-good" style="text-align:right">9.5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/the-enduring-impact-of-seo-what-keeps-search-optimization-relevant-in-2025/</td><td style="text-align:right">13</td><td class="rank-warn" style="text-align:right">18</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/get-to-know-us/meet-the-team</td><td style="text-align:right">12</td><td class="rank-warn" style="text-align:right">13</td><td style="text-align:right">1</td><td class="ctr-good" style="text-align:right">8.33%</td><td style="font-size:11.5px">Good (pos 9.5). Add team bios, agency certifications, Google Partner badge</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/category/responsive-website-design/</td><td style="text-align:right">12</td><td class="rank-warn" style="text-align:right">18.5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/featured-snippet-optimization-structuring-content-for-position-zero/</td><td style="text-align:right">12</td><td class="rank-bad" style="text-align:right">29</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/partnership-program/our-partnership-with-pinnacle-trenchless-consulting/</td><td style="text-align:right">11</td><td class="rank-good" style="text-align:right">7.5</td><td style="text-align:right">2</td><td class="ctr-good" style="text-align:right">18.18%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/category/google-business-profile/</td><td style="text-align:right">10</td><td class="rank-good" style="text-align:right">5.8</td><td style="text-align:right">1</td><td class="ctr-good" style="text-align:right">10.0%</td><td style="font-size:11.5px">GBP management page at pos 19.8 — near page 2! Add pricing, FAQ schema, GBP optimization checklist</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/category/social-media-strategy/</td><td style="text-align:right">9</td><td class="rank-warn" style="text-align:right">20.7</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/category/seo-optimization/</td><td style="text-align:right">8</td><td class="rank-good" style="text-align:right">6.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/google-lens-how-it-impacts-SEO-and-who-can-benefit-from-it/</td><td style="text-align:right">8</td><td class="rank-warn" style="text-align:right">21</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/partnership-program/our-partnership-with-npn360/</td><td style="text-align:right">7</td><td class="rank-good" style="text-align:right">10.9</td><td style="text-align:right">1</td><td class="ctr-good" style="text-align:right">14.29%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/category/ppc-marketing-services/</td><td style="text-align:right">7</td><td class="rank-bad" style="text-align:right">35</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/the-impact-of-ad-copy-on-ppc-success-crafting-messages-that-convert/</td><td style="text-align:right">6</td><td class="rank-good" style="text-align:right">5</td><td style="text-align:right">1</td><td class="ctr-good" style="text-align:right">16.67%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/affiliate-registration/</td><td style="text-align:right">6</td><td class="rank-warn" style="text-align:right">13.8</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/is-call-tracking-what-your-company-needs/</td><td style="text-align:right">6</td><td class="rank-good" style="text-align:right">5.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/page/17/</td><td style="text-align:right">6</td><td class="rank-warn" style="text-align:right">22.2</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/page/19/</td><td style="text-align:right">6</td><td class="rank-good" style="text-align:right">6</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/affiliate-login/</td><td style="text-align:right">5</td><td class="rank-good" style="text-align:right">4.4</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/page/4/</td><td style="text-align:right">5</td><td class="rank-good" style="text-align:right">7</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/affiliate-area/</td><td style="text-align:right">4</td><td class="rank-good" style="text-align:right">4.5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand content with case study, FAQ schema, internal links to service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/page/15/</td><td style="text-align:right">3</td><td class="rank-good" style="text-align:right">7.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/the-biggest-benefits-of-realtime-reviews/</td><td style="text-align:right">3</td><td class="rank-good" style="text-align:right">4</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-gbp-works-for-businesses/</td><td style="text-align:right">2</td><td class="rank-good" style="text-align:right">8.5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/is-seo-still-relevant/</td><td style="text-align:right">1</td><td class="rank-good" style="text-align:right">1</td><td style="text-align:right">1</td><td class="ctr-good" style="text-align:right">100%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/blog/category/uncategorized/page/8/</td><td style="text-align:right">1</td><td class="rank-bad" style="text-align:right">39</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-good-web-design-can-drive-more-traffic-to-your-business/</td><td style="text-align:right">1</td><td class="rank-good" style="text-align:right">5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/voice-search-and-mobile-SEO-why-they-go-hand-in-hand/</td><td style="text-align:right">1</td><td class="rank-good" style="text-align:right">10</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Blog content performing. Add FAQ schema + internal links to relevant service pages</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="section-title" style="margin-top:28px">🔧 What Every Underperforming Page Is Missing</div>
+  <div class="insight-grid">
+    <div class="insight-box red"><div class="insight-title">❌ #1: No Client Case Studies on Service Pages</div><p>The LSA for Roofers page ranks page 1 likely because it has more specific content. Every industry page needs: a real client name/story, before/after metrics (clicks, cost-per-lead, ROI), and a quote. Case studies are the #1 EEAT signal for marketing agencies.</p></div>
+    <div class="insight-box red"><div class="insight-title">❌ #2: No Pricing Transparency</div><p>B2B buyers research costs before contacting an agency. None of the service pages include pricing ranges or package structures. Pages with transparent pricing rank significantly higher for commercial-intent queries and convert at 3–5x better rates.</p></div>
+    <div class="insight-box red"><div class="insight-title">❌ #3: No FAQPage Schema</div><p>Zero FAQPage schema across service pages. Adding 4–5 questions per page targeting "how much does [service] cost for [industry]?" would capture People Also Ask appearances and AI Overview inclusions — critical for B2B lead generation.</p></div>
+    <div class="insight-box orange"><div class="insight-title">⚠️ #4: Thin "Who We Help" Pages</div><p>The who-we-help pages (plumbers, HVAC, electricians, roofers) have massive impression volume (40K–105K each) but rank pages 3–5. These need industry-specific statistics, compliance/license context for that trade, and a results section showing Real Time Marketing's track record.</p></div>
+    <div class="insight-box orange"><div class="insight-title">⚠️ #5: No Internal Link Structure from Homepage</div><p>The homepage (1018 clicks, pos 13.9) should be distributing link equity to the high-impression pages. Add a "Services by Industry" section on the homepage linking directly to the 12 industry pages — this alone can improve rankings for those pages within 30 days.</p></div>
+    <div class="insight-box blue"><div class="insight-title">💡 #6: Blog Posts Not Linked to Service Pages</div><p>Blog posts like "How to Handle Duplicate GBP Listings" (pos 13, 16 clicks) should have internal links to /services/google-business-profile/. Every blog post should link to 2–3 relevant service pages to pass authority and improve rankings.</p></div>
+  </div>
+</div>
+
+<!-- CONTENT CALENDAR -->
+<div id="tab-calendar" class="tab-pane">
+  <div class="section-title">Content Calendar — Jun–Nov 2026</div>
+  <div class="section-sub">Service page upgrades + 8 blog posts/month backed by GSC data</div>
+
+  <div class="card">
+    <div class="card-title">📅 Service Page Fix Priority — June–November 2026</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Month</th><th>Page to Fix</th><th>GSC Signal</th><th>Action Required</th></tr></thead>
+      <tbody>
+        <tr><td>Jun 2026</td><td>/services/search-engine-optimization-for-hvac/</td><td>135,657 impr, pos 31.9</td><td>Add HVAC SEO case study, keyword examples, cost guide, FAQ schema</td></tr>
+        <tr><td>Jun 2026</td><td>/who-we-help/digital-marketing-for-plumbers/</td><td>105,574 impr, pos 27.8</td><td>Add plumber client ROI stats, LSA vs SEO comparison, FAQ schema</td></tr>
+        <tr><td>Jul 2026</td><td>/who-we-help/digital-marketing-for-hvac/</td><td>40,582 impr, pos 41.6</td><td>HVAC marketing case study, seasonal campaign results, FAQ schema</td></tr>
+        <tr><td>Jul 2026</td><td>/who-we-help/digital-marketing-for-electricians/</td><td>39,754 impr, pos 31.3</td><td>Electrician marketing specifics, LSA case study, certification context</td></tr>
+        <tr><td>Aug 2026</td><td>/services/search-engine-optimization-for-electricians/</td><td>27,392 impr, pos 57.8</td><td>Complete rewrite — page 6! Electrician SEO process, ranking timeline, results</td></tr>
+        <tr><td>Aug 2026</td><td>/who-we-help/digital-marketing-for-roofers/</td><td>33,255 impr, pos 44.7</td><td>Roofer marketing: storm season campaigns, lead gen, case study</td></tr>
+        <tr><td>Sep 2026</td><td>/services/website-design-for-plumbers/</td><td>26,894 impr, pos 48.7</td><td>Plumber website examples, mobile-first, conversion design, FAQ schema</td></tr>
+        <tr><td>Sep 2026</td><td>/services/google-business-profile/</td><td>42,073 impr, pos 19.8</td><td>Add pricing, GBP optimization checklist, FAQ schema — near page 2!</td></tr>
+        <tr><td>Oct 2026</td><td>/who-we-help/digital-marketing-for-home-services/</td><td>60,496 impr, pos 24.4</td><td>Home services marketing guide, multi-service bundling, results, FAQ</td></tr>
+        <tr><td>Nov 2026</td><td>/services/search-engine-optimization/</td><td>12,229 impr, pos 42.2</td><td>Main SEO page overhaul — pricing, process, timeline, FAQ schema</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="section-title" style="margin-top:28px">✍️ Monthly Blog Topics — Jun–Nov 2026 (8 Posts/Month)</div>
+  <div class="insight-box blue" style="margin-bottom:16px">
+    <div class="insight-title">💡 Blog Strategy: Rank for "Digital Marketing for [Industry]" Queries</div>
+    <p>GSC shows "digital marketing for home services" at pos 9.7 and "digital marketing for plumbers" at pos 20.6 — both generating minimal traffic despite thousands of impressions. Blog content targeting these specific industry + marketing keyword clusters builds topical authority and funnels readers to service pages. Target 1,400–1,800 words per post. Publish 2x/week.</p>
+  </div>
+
+  <!-- JUNE -->
+  <div class="card">
+    <div class="card-title" style="background:var(--primary);color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 June 2026 — 8 Blog Posts</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Words</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>SEO for HVAC Companies: A 2026 Complete Guide</strong></td><td>seo for hvac companies</td><td>1,800</td><td>HVAC keyword strategy, local SEO, seasonal content, case study with real results, FAQ schema — directly supports 135K impr page</td></tr>
+        <tr><td>2</td><td><strong>Digital Marketing for Plumbers: What Actually Works in 2026</strong></td><td>digital marketing for plumbers</td><td>1,600</td><td>LSA vs SEO vs GBP for plumbers, ROI comparison, what to budget, real client results — supports 105K impr page</td></tr>
+        <tr><td>3</td><td><strong>How Much Does Google Local Services Ads Cost for Contractors? (2026)</strong></td><td>local service ads cost contractors</td><td>1,500</td><td>LSA cost-per-lead by trade, budget guide, how bidding works, ROI expectations — high commercial intent</td></tr>
+        <tr><td>4</td><td><strong>GBP Optimization Checklist: 15 Steps to Rank #1 in the Map Pack</strong></td><td>gbp optimization checklist</td><td>1,600</td><td>Complete GBP audit, photo strategy, review velocity, post schedule, Q&A — supports GBP management page</td></tr>
+        <tr><td>5</td><td><strong>LSA for Roofers: How to Get Google Guaranteed and Scale Leads</strong></td><td>local services ads roofers</td><td>1,500</td><td>Verification process, cost-per-lead, ad optimization, seasonal strategy — this page already ranks page 1, boost further</td></tr>
+        <tr><td>6</td><td><strong>Digital Marketing for Home Services: The 2026 Strategy Guide</strong></td><td>digital marketing home services</td><td>1,600</td><td>Multi-channel approach, seasonality, GBP + LSA + SEO stack — supports 60K impr page</td></tr>
+        <tr><td>7</td><td><strong>How to Get More Reviews for Your Plumbing Business (Without Begging)</strong></td><td>how to get more plumbing reviews</td><td>1,400</td><td>Review request timing, text/email templates, responding to negatives, review schema — high value for plumber clients</td></tr>
+        <tr><td>8</td><td><strong>Why Your GBP Listing Is Losing Rankings (And How to Fix It)</strong></td><td>gbp ranking dropped</td><td>1,400</td><td>Common GBP ranking issues, suspensions, competitor actions, recovery steps — high search volume query</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- JULY -->
+  <div class="card">
+    <div class="card-title" style="background:#1565C0;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 July 2026 — 8 Blog Posts</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Words</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>9</td><td><strong>HVAC Marketing Strategy: How to Get Leads Year-Round</strong></td><td>hvac marketing strategy</td><td>1,600</td><td>Seasonal content calendar, LSA for HVAC, GBP optimization, summer vs winter campaigns — supports 40K impr page</td></tr>
+        <tr><td>10</td><td><strong>Digital Marketing for Electricians: What Drives Leads in 2026</strong></td><td>digital marketing for electricians</td><td>1,500</td><td>Electrician keyword landscape, license display for EEAT, LSA verification process — supports 39K impr page</td></tr>
+        <tr><td>11</td><td><strong>How Much Does SEO Cost for a Small Business? (2026 Pricing Guide)</strong></td><td>seo cost small business</td><td>1,600</td><td>Pricing tiers, what you get at each level, ROI timeline, how to evaluate agencies — high commercial intent for RTM</td></tr>
+        <tr><td>12</td><td><strong>Google Guaranteed vs Google Ads: Which Is Better for Plumbers?</strong></td><td>google guaranteed vs google ads plumbers</td><td>1,400</td><td>Side-by-side comparison, cost per lead, conversion quality, when to use each — comparison posts rank fast</td></tr>
+        <tr><td>13</td><td><strong>Car Rental Marketing: How to Get More Direct Bookings in 2026</strong></td><td>car rental marketing</td><td>1,400</td><td>SEO for car rental, Google Ads, review strategy, local vs national competition — supports car rental page (pos 10.3)</td></tr>
+        <tr><td>14</td><td><strong>Roofing Company Marketing: How to Get Leads After a Storm</strong></td><td>roofing marketing storm leads</td><td>1,500</td><td>Storm chasing marketing strategy, emergency LSA campaigns, GBP posts for storm response</td></tr>
+        <tr><td>15</td><td><strong>How to Rank #1 on Google Maps for Your Home Service Business</strong></td><td>rank number 1 google maps home service</td><td>1,600</td><td>Local pack ranking factors, citation building, review velocity, GBP categories, service area — high demand</td></tr>
+        <tr><td>16</td><td><strong>The Real Cost of Not Investing in Digital Marketing (For Contractors)</strong></td><td>contractor digital marketing roi</td><td>1,400</td><td>Opportunity cost calculator, competitor case study, average cost-per-lead by channel — conversion-focused</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- AUGUST -->
+  <div class="card">
+    <div class="card-title" style="background:#16A34A;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 August 2026 — 8 Blog Posts</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Words</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>17</td><td><strong>SEO for Electricians: How to Rank in a Competitive Market</strong></td><td>seo for electricians</td><td>1,600</td><td>Electrician keyword strategy, license display EEAT, local pages, FAQ schema — directly supports page 6 page (27K impr)</td></tr>
+        <tr><td>18</td><td><strong>Digital Marketing for Roofers: The Complete 2026 Guide</strong></td><td>digital marketing for roofers</td><td>1,600</td><td>Roofing marketing channels, storm season strategy, LSA + GBP + SEO stack — supports 33K impr page</td></tr>
+        <tr><td>19</td><td><strong>How to Build a 5-Star Reputation for Your Home Service Business</strong></td><td>home service reputation management</td><td>1,500</td><td>Review strategy, responding to 1-star reviews, AggregateRating schema, leveraging reviews in ads</td></tr>
+        <tr><td>20</td><td><strong>Website Design for Plumbers: What You Actually Need in 2026</strong></td><td>website design for plumbers</td><td>1,400</td><td>Essential plumber website elements, mobile-first, click-to-call, trust signals — supports 26K impr page</td></tr>
+        <tr><td>21</td><td><strong>Pest Control Marketing: How to Fill Your Schedule Year-Round</strong></td><td>pest control marketing</td><td>1,400</td><td>Seasonal pest control content, LSA for pest control, subscription model marketing — supports pest control page</td></tr>
+        <tr><td>22</td><td><strong>How Google LSA Works: A Plain-English Guide for Home Service Owners</strong></td><td>how does google lsa work</td><td>1,500</td><td>LSA explained simply, verification steps, how leads are charged, tips to lower cost-per-lead</td></tr>
+        <tr><td>23</td><td><strong>Marketing for Tree Service Companies: Getting Leads Without Door-Knocking</strong></td><td>tree service marketing</td><td>1,400</td><td>Tree service SEO, storm response campaigns, GBP, Nextdoor advertising — supports tree service page</td></tr>
+        <tr><td>24</td><td><strong>How to Write a Google Business Profile Description That Gets More Clicks</strong></td><td>google business profile description</td><td>1,300</td><td>Character limits, keyword placement, CTA best practices, A/B testing approach — practical GBP guide</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- SEPTEMBER -->
+  <div class="card">
+    <div class="card-title" style="background:#7C3AED;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 September 2026 — 8 Blog Posts</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Words</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>25</td><td><strong>Fall Marketing Checklist for Home Service Companies</strong></td><td>fall marketing home services</td><td>1,500</td><td>Seasonal campaign prep, GBP posts, budget allocation for Q4, SEO content calendar</td></tr>
+        <tr><td>26</td><td><strong>MedSpa Marketing: How to Get More Clients Without Discounting</strong></td><td>medspa marketing strategy</td><td>1,500</td><td>HIPAA-compliant marketing, before/after content rules, SEO for aesthetics, Google Ads — supports medspa page</td></tr>
+        <tr><td>27</td><td><strong>Weight Loss Clinic Marketing: A 2026 Complete Strategy</strong></td><td>weight loss clinic marketing</td><td>1,500</td><td>Weight loss marketing compliance, before/after testimonials, GLP-1 demand capture, FAQ schema</td></tr>
+        <tr><td>28</td><td><strong>Landscaping Company Marketing: Getting Leads in Every Season</strong></td><td>landscaping company marketing</td><td>1,400</td><td>Seasonal landscaping content, GBP optimization, Nextdoor strategy, FAQ schema — supports landscaper page</td></tr>
+        <tr><td>29</td><td><strong>The Real Time Marketing Partner Program: How It Works</strong></td><td>marketing agency partner program</td><td>1,300</td><td>What RTM's partner program offers, revenue share, who qualifies — 17 partner program views in GA4 signal interest</td></tr>
+        <tr><td>30</td><td><strong>How to Choose a Digital Marketing Agency for Your Service Business</strong></td><td>choose digital marketing agency service business</td><td>1,600</td><td>8 criteria checklist, red flags, questions to ask, contract terms to watch — high-intent comparison query</td></tr>
+        <tr><td>31</td><td><strong>GBP Suspension: How to Get Your Google Business Profile Back</strong></td><td>google business profile suspended</td><td>1,400</td><td>Why GBPs get suspended, reinstatement process, prevention checklist — very high search volume</td></tr>
+        <tr><td>32</td><td><strong>Local SEO for Contractors: Ranking in Multiple Cities Without Fake Locations</strong></td><td>local seo for contractors multiple cities</td><td>1,600</td><td>Service area pages strategy, city page content, GBP service area vs storefront — common contractor pain point</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- OCTOBER -->
+  <div class="card">
+    <div class="card-title" style="background:#EA580C;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 October 2026 — 8 Blog Posts</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Words</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>33</td><td><strong>Q4 Marketing Strategy for Home Service Companies</strong></td><td>q4 marketing home service</td><td>1,500</td><td>Holiday slow season strategy, year-end lead gen, budget planning for January rush</td></tr>
+        <tr><td>34</td><td><strong>SEO for Chiropractors: A 2026 Step-by-Step Guide</strong></td><td>seo for chiropractors</td><td>1,600</td><td>Chiropractic keyword strategy, HIPAA-safe content, Google Reviews for medical, FAQ schema — supports pos 51.4 page</td></tr>
+        <tr><td>35</td><td><strong>Auto Glass Marketing: How to Compete With Safelite Online</strong></td><td>auto glass marketing</td><td>1,400</td><td>Auto glass SEO, insurance jobs marketing, Google Ads vs organic, local vs national — supports autoglass page</td></tr>
+        <tr><td>36</td><td><strong>How to Use Google Posts to Boost Your GBP Rankings</strong></td><td>google posts gbp rankings</td><td>1,300</td><td>Post types, frequency, image optimization, CTR impact, post strategy for service businesses</td></tr>
+        <tr><td>37</td><td><strong>Pay-Per-Click Advertising for HVAC: What to Know Before You Spend</strong></td><td>ppc for hvac companies</td><td>1,500</td><td>HVAC Google Ads keywords, seasonal bidding, cost benchmarks, remarketing — supports PPC for HVAC page</td></tr>
+        <tr><td>38</td><td><strong>Solar Company Marketing: Capturing Post-IRA Demand in 2026</strong></td><td>solar company marketing</td><td>1,500</td><td>IRA incentive content strategy, federal/state rebate FAQ, lead gen for solar installers — supports solar page</td></tr>
+        <tr><td>39</td><td><strong>The Ultimate Local SEO Audit Checklist for Service Businesses</strong></td><td>local seo audit checklist</td><td>1,600</td><td>20-point audit: GBP, citations, on-page, reviews, schema — lead magnet potential</td></tr>
+        <tr><td>40</td><td><strong>House Cleaning Marketing: How to Fill Your Schedule Every Week</strong></td><td>house cleaning marketing</td><td>1,400</td><td>House cleaning SEO, Yelp strategy, recurring customer marketing, referral programs — supports house cleaning page</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- NOVEMBER -->
+  <div class="card">
+    <div class="card-title" style="background:#DC2626;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 November 2026 — 8 Blog Posts</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Words</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>41</td><td><strong>Digital Marketing Predictions for Home Services in 2027</strong></td><td>home service marketing trends 2027</td><td>1,600</td><td>AI in local search, voice search, LSA expansion, video in GBP — thought leadership piece</td></tr>
+        <tr><td>42</td><td><strong>How Much Should a Plumber Spend on Marketing? (2026 Budget Guide)</strong></td><td>plumbing marketing budget</td><td>1,500</td><td>Marketing spend benchmarks by revenue, channel allocation, ROI expectations — high commercial intent</td></tr>
+        <tr><td>43</td><td><strong>Real Time Marketing 2026 Year in Review: Client Results</strong></td><td>real time marketing results</td><td>1,400</td><td>Aggregate client results, industries served, top wins — EEAT brand builder</td></tr>
+        <tr><td>44</td><td><strong>Marketing for Septic &amp; Sewage Companies: Getting Leads Others Miss</strong></td><td>septic company marketing</td><td>1,400</td><td>Septic SEO, seasonal content (spring/fall inspection push), GBP for septic — supports septic page</td></tr>
+        <tr><td>45</td><td><strong>How to Handle Negative Reviews for Your Service Business</strong></td><td>respond to negative reviews service business</td><td>1,400</td><td>Response templates, when to flag a review, turning negatives into positives, review velocity</td></tr>
+        <tr><td>46</td><td><strong>Pay-Per-Click for Plumbers: Google Ads vs LSA vs Facebook</strong></td><td>ppc for plumbers</td><td>1,500</td><td>Platform comparison, cost per lead, when to use each, campaign structure — supports PPC for plumbers page</td></tr>
+        <tr><td>47</td><td><strong>Website Design for HVAC Companies: What Converts in 2026</strong></td><td>hvac website design</td><td>1,400</td><td>HVAC website best practices, before/after examples, trust signals, CTA placement — supports website design page</td></tr>
+        <tr><td>48</td><td><strong>The Contractor's Guide to Google Guaranteed: Everything You Need to Know</strong></td><td>google guaranteed contractors guide</td><td>1,600</td><td>Complete LSA guide: eligibility, verification, budgeting, optimization — pillar content for LSA pages</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- PRIORITY ACTIONS -->
+<div id="tab-actions" class="tab-pane">
+  <div class="section-title">Priority Action Plan</div>
+  <div class="section-sub">Ranked by impact · Real Time Marketing · Summer 2026</div>
+  <div class="card">
+    <div class="card-title">🚀 Top 10 Priority Actions</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Action</th><th>Impact</th><th>Effort</th><th>Est. Gain</th><th>Timeline</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Rewrite SEO for HVAC page — case study, cost guide, FAQ schema (135K impr, pos 31.9)</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-orange">Medium</span></td><td>+200–400 clicks/mo</td><td>Week 1–2</td></tr>
+        <tr><td><strong>2</strong></td><td>Expand Digital Marketing for Plumbers page (105K impr, pos 27.8) — ROI data, FAQ schema</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-orange">Medium</span></td><td>+150–300 clicks/mo</td><td>Week 1–2</td></tr>
+        <tr><td><strong>3</strong></td><td>Complete rewrite of SEO for Electricians (27K impr, pos 57.8 — page 6!)</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-orange">Medium</span></td><td>+40–80 clicks/mo</td><td>Week 2–3</td></tr>
+        <tr><td><strong>4</strong></td><td>Set up GA4 hostname filter to separate client portal from marketing website traffic</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-green">Low</span></td><td>Accurate reporting</td><td>This week</td></tr>
+        <tr><td><strong>5</strong></td><td>Add FAQ schema to GBP management page (42K impr, pos 19.8) + pricing section</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>+40–70 clicks/mo</td><td>Week 1</td></tr>
+        <tr><td><strong>6</strong></td><td>Fix title tag for "gbp management agency" (pos 3.8 with only 2 clicks) — include exact phrase</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>+15–25 clicks/mo</td><td>This week</td></tr>
+        <tr><td><strong>7</strong></td><td>Add internal links from homepage to all 12 industry pages (breaks the silo)</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>Rankings lift site-wide</td><td>Week 1</td></tr>
+        <tr><td><strong>8</strong></td><td>Implement FAQPage schema on all service and industry pages</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>AI Overview appearances</td><td>Week 2</td></tr>
+        <tr><td><strong>9</strong></td><td>Scale paid search budget — 22.4% conversion rate means every $1K likely drives 2–3 leads</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>+$X revenue</td><td>This week</td></tr>
+        <tr><td><strong>10</strong></td><td>Add client case studies with real ROI metrics to top 5 industry pages</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-orange">Medium</span></td><td>EEAT + conversion boost</td><td>Month 2</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📆 90-Day Roadmap</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Timeline</th><th>Actions</th><th>Expected Outcome</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Week 1</strong></td><td>GA4 portal filter setup · GBP title tag fix · Scale paid search · Homepage internal links · GBP management FAQ schema</td><td>Accurate data; quick CTR wins; more leads from paid</td></tr>
+        <tr><td><strong>Week 2–3</strong></td><td>SEO for HVAC page rewrite · Digital marketing for plumbers rewrite · FAQPage schema site-wide</td><td>2 highest-impression pages start moving up</td></tr>
+        <tr><td><strong>Month 2</strong></td><td>Electricians SEO page rewrite · HVAC + electricians who-we-help rewrites · Client case studies added · Blog launch (8 posts)</td><td>15+ pages improving; blog traffic starts</td></tr>
+        <tr><td><strong>Month 3</strong></td><td>Roofers marketing rewrite · Website design pages · Remaining who-we-help rewrites · Internal link audit complete</td><td>Comprehensive site-wide improvement; 500+ new organic clicks/mo</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+function filterP(p) {
+  document.querySelectorAll('[data-pf]').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-pf="${p}"]`).classList.add('active');
+  document.querySelectorAll('#ptbody tr').forEach(row => {
+    if (p === 'ALL') { row.style.display = ''; return; }
+    const badge = row.querySelector('.badge');
+    row.style.display = badge && badge.textContent.trim() === p ? '' : 'none';
+  });
+}
+
+const BL='rgba(27,58,107,0.8)', OR='rgba(245,166,35,0.8)', GR='rgba(22,163,74,0.8)', RD='rgba(220,38,38,0.8)', GY='rgba(107,120,144,0.7)';
+
+new Chart(document.getElementById('gbpChart'), {
+  type:'bar', data:{
+    labels:['Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
+    datasets:[
+      {label:'Website Clicks',data:[30,27,22,18,29,30,16,22],backgroundColor:BL},
+      {label:'Calls',data:[4,3,4,1,1,1,3,5],backgroundColor:OR}
+    ]
+  }, options:{responsive:true,maintainAspectRatio:false}
+});
+
+new Chart(document.getElementById('gscTrendChart'), {
+  type:'line', data:{
+    labels:['Oct25','Nov25','Dec25','Jan26','Feb26','Mar26','Apr26'],
+    datasets:[
+      {label:'Clicks',data:[317,296,184,317,310,273,258],borderColor:BL,backgroundColor:'rgba(27,58,107,.1)',tension:.3,fill:true,yAxisID:'y'},
+      {label:'Impressions/1000',data:[128,127,172,234,246,204,155],borderColor:OR,borderDash:[5,5],tension:.3,yAxisID:'y1'}
+    ]
+  }, options:{responsive:true,maintainAspectRatio:false,scales:{y:{position:'left',title:{display:true,text:'Clicks'}},y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'Impr (000s)'}}}}
+});
+
+new Chart(document.getElementById('gscPosChart'), {
+  type:'line', data:{
+    labels:['Oct25','Nov25','Dec25','Jan26','Feb26','Mar26','Apr26'],
+    datasets:[{label:'Avg Position',data:[30.2,30.7,36.8,32.8,27.8,19.2,24.7],borderColor:RD,backgroundColor:'rgba(220,38,38,.08)',tension:.3,fill:true,pointRadius:5}]
+  }, options:{responsive:true,maintainAspectRatio:false,scales:{y:{reverse:true,min:10,max:45,title:{display:true,text:'Position (lower=better)'}}}}
+});
+
+new Chart(document.getElementById('deviceChart'), {
+  type:'doughnut', data:{
+    labels:['Desktop','Mobile','Tablet'],
+    datasets:[{data:[856,299,3],backgroundColor:[BL,OR,GR]}]
+  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}
+});
+
+new Chart(document.getElementById('sessionsChart'), {
+  type:'bar', data:{
+    labels:['Jan 2026','Feb 2026','Mar 2026','Apr 2026'],
+    datasets:[
+      {label:'Sessions',data:[15908,13279,13200,10081],backgroundColor:BL},
+      {label:'Engaged Sessions',data:[6643,6029,6093,4797],backgroundColor:GR}
+    ]
+  }, options:{responsive:true,maintainAspectRatio:false}
+});
+
+new Chart(document.getElementById('channelsChart'), {
+  type:'doughnut', data:{
+    labels:['Direct','Referral (portal)','Organic','Paid','Email','Social'],
+    datasets:[{data:[23907,17443,7301,2990,556,305],backgroundColor:[BL,GY,GR,OR,'#7C3AED',RD]}]
+  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}
+});
+</script>
+</body>
+</html>
